@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Alamofire.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-fos.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -24,10 +19,20 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>STTwitter.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>02A378313C0DD748320838B439E504D5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1A3A30438FDE5A71484683F07DDCACF1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -37,12 +42,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>536EF592C4DEC3541591FD5806371815</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<key>C10D34BC2E7FAB9645F237F43F6B9A81</key>
 		<dict>
 			<key>primary</key>
 			<true/>

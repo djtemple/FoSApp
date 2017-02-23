@@ -19,7 +19,6 @@
 		8731789A1E4D99B600B54269 /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873178961E4D99B600B54269 /* TwitterKit.framework */; };
 		8731789B1E4D99B600B54269 /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 873178971E4D99B600B54269 /* TwitterKitResources.bundle */; };
 		8731789C1E4D99B600B54269 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873178981E4D99B600B54269 /* TwitterCore.framework */; };
-		8731789E1E4D9B3A00B54269 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8731789D1E4D9B3A00B54269 /* HomeTableViewController.swift */; };
 		876932EE1E3410AC005D46A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876932ED1E3410AC005D46A6 /* AppDelegate.swift */; };
 		876932F51E3410AD005D46A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 876932F41E3410AD005D46A6 /* Assets.xcassets */; };
 		876932F81E3410AD005D46A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 876932F61E3410AD005D46A6 /* LaunchScreen.storyboard */; };
@@ -59,7 +58,6 @@
 		873178961E4D99B600B54269 /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
 		873178971E4D99B600B54269 /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TwitterKitResources.bundle; sourceTree = "<group>"; };
 		873178981E4D99B600B54269 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
-		8731789D1E4D9B3A00B54269 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		876932EA1E3410AC005D46A6 /* fos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		876932ED1E3410AC005D46A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		876932F41E3410AD005D46A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -154,15 +152,14 @@
 				873178981E4D99B600B54269 /* TwitterCore.framework */,
 				871113FB1E3E904A00110735 /* Main.storyboard */,
 				87DC90341E522704007DC991 /* ScrollTableViewCell.swift */,
-				8731789D1E4D9B3A00B54269 /* HomeTableViewController.swift */,
 				873178921E4D8F3B00B54269 /* EventTableViewCell.swift */,
 				873178901E4D8D1700B54269 /* EventsViewController.swift */,
 				871114001E3E9C8500110735 /* NewsTableViewController.swift */,
+				871114021E4074E400110735 /* HomeViewController.swift */,
 				876932F41E3410AD005D46A6 /* Assets.xcassets */,
 				876932F61E3410AD005D46A6 /* LaunchScreen.storyboard */,
 				876932ED1E3410AC005D46A6 /* AppDelegate.swift */,
 				876932F91E3410AD005D46A6 /* Info.plist */,
-				871114021E4074E400110735 /* HomeViewController.swift */,
 			);
 			path = fos;
 			sourceTree = "<group>";
@@ -499,7 +496,6 @@
 				871114011E3E9C8500110735 /* NewsTableViewController.swift in Sources */,
 				87DC90351E522704007DC991 /* ScrollTableViewCell.swift in Sources */,
 				873178911E4D8D1700B54269 /* EventsViewController.swift in Sources */,
-				8731789E1E4D9B3A00B54269 /* HomeTableViewController.swift in Sources */,
 				871114031E4074E400110735 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

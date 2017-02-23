@@ -8,113 +8,96 @@
 
 import UIKit
 import TwitterKit
-import Alamofire
+import STTwitter
 
-class HomeViewController: UIViewController, UITableViewDelegate, TWTRTweetViewDelegate {
-
-    @IBOutlet weak var scrollView: UIScrollView!
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,TWTRTweetViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var imageArray = [UIImage]()
-    
-    let tweetTableReuseIdentifier = "TweetCell"
-
     // Hold all the loaded Tweets
-    var tweets: [TWTRTweet] = [] {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
-    let tweetIDs = ["34937182"]
+    var tweets: [TWTRTweet] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageArray = [#imageLiteral(resourceName: "slide 1"), #imageLiteral(resourceName: "darwin_lecture_shoutout2017_2")]
+        let twitter = STTwitterAPI(oAuthConsumerKey: "vGdyaBeBYWka2JwDQvHSLviCL", consumerSecret: "OTcbCMM9oW9D3wXVDp6gTpwkzRQzDBfDgm9AXfipLjH3pq0C0t", oauthToken: "826142454613020672-cRBbVSOOPhNBstNnPDin6NJl3swd8Wp", oauthTokenSecret: "yWmRoRJBb9oPx00od1FpUCzfS6XC48uxUJa9si85d2ryo")
         
-        for i in 0..<imageArray.count {
-            let iView = UIImageView()
-            iView.image = imageArray[i]
-            if i == 1 {
-                iView.contentMode = .scaleAspectFit
-            }
-            else {
-                iView.contentMode = .scaleAspectFit
+        twitter?.verifyCredentials(userSuccessBlock: { (username, userID) in
             
-            }
-            let xPosition = self.view.frame.width * CGFloat(i)
-            iView.frame = CGRect(x: xPosition, y: 0, width: self.scrollView.frame.width, height: self.scrollView.frame.height)
+            //print(username!)
             
-            scrollView.contentSize.width = scrollView.frame.width * CGFloat(i + 1)
-            scrollView.addSubview(iView)
+        }) { (error) in
+            
+            print(error ?? "Error verifing")
             
         }
-        Timer.scheduledTimer(timeInterval: 8, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
         
-        let client = TWTRAPIClient()
-        let dataSource = TWTRUserTimelineDataSource.init(screenName: "UofC_Science", apiClient: client)
-        
-        tweets = dataSource.
-        
-        
-        /*
-        Alamofire.request("https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=826142454613020672&screen_name=karson_chau").responseData(completionHandler: {
-            response in
-            self.parseData(JSONData: response.data!)
-        
-        })
-        */
-        // get the api key and response
-        // put it into the function below
-        
-    }
-    
-    func parseData(JSONData: Data) {
-        do {
-            let readableJson = try JSONSerialization.jsonObject(with: JSONData, options: .mutableContainers) as! NSObject
-            print(readableJson)
-            tweets = TWTRTweet.tweets(withJSONArray: readableJson as? [Any]) as! [TWTRTweet]
+        twitter?.getHomeTimeline(sinceID: nil, count: 20, successBlock: { (statuses) in
+            //print(statuses!)
+            
+            self.tweets = TWTRTweet.tweets(withJSONArray: statuses!) as! [TWTRTweet]
+            
+            print(self.tweets)
+            
+            self.tableView.reloadData()
+            
+        }) { (error) in
+            print(error ?? "Error fetching data")
         }
-        catch {
-            print(error)
-        }
-    }
-    
-    func moveToNextPage() {
-        
-        let pageWidth:CGFloat = self.scrollView.frame.width
-        //print(pageWidth)
-        let maxWidth:CGFloat = pageWidth * 2
-        let contentOffset:CGFloat = self.scrollView.contentOffset.x
-        //print(contentOffset)
-        var slideToX = contentOffset + pageWidth
-        
-        if  contentOffset + pageWidth == maxWidth
-        {
-            slideToX = 0
-        }
- 
-        //self.scrollView.scrollRectToVisible(CGRect(x:slideToX, y:0, width:pageWidth, height:self.scrollView.frame.height), animated: true)
-        
-        self.scrollView.setContentOffset(CGPoint(x: slideToX, y: 0), animated: true)
 
-    }
-    // MARK: UITableViewDelegate Methods
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.tweets.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
-        let tweet = tweets[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: tweetTableReuseIdentifier, for: indexPath as IndexPath) as! TWTRTweetTableViewCell
-        cell.tweetView.delegate = self
-        cell.configure(with: tweet)
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let tweet = tweets[indexPath.row]
         
-        return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width:self.view.bounds.width, showingActions: false)
+      
+    }
+    
+    // MARK: UITableViewDelegate Methods
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("from numberOfRowsInSection: " + String(self.tweets.count))
+        // Plus one for the header cell
+        return self.tweets.count + 1
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if(indexPath.row == 0) {
+            let scrollCell = tableView.dequeueReusableCell(withIdentifier: "ScrollCell", for: indexPath as IndexPath) as! ScrollTableViewCell
+            return scrollCell
+        }
+        else {
+            let tweet = tweets[indexPath.row - 1]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath as IndexPath) as! TWTRTweetTableViewCell
+            cell.tweetView.delegate = self
+            cell.tweetView.showActionButtons = false
+            cell.configure(with: tweet)
+            return cell
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if(indexPath.row > 0) {
+            let tweet = tweets[indexPath.row - 1]
+            
+            return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width:self.view.bounds.width, showingActions: false)
+        }
+        else {
+            return 120
+            
+        }
+        
+    }
+    // leave it for now. This gets rid of the tweet actions in twttweetdetailviewcontroller
+    func tweetView(_ tweetView: TWTRTweetView, shouldDisplay controller: TWTRTweetDetailViewController) -> Bool {
+        // customize the controller to fit your needs.
+        
+        // show the view controller in a way that is appropriate for you current setup which may include pushing on a
+        // navigation stack or presenting in a pop over controller.
+        self.show(controller, sender:self)
+        
+        // return false to tell Twitter Kit that you will present the controller on your own.
+        // return true if you want Twitter Kit to present it for you, this is the default if you don't implement this method.
+        return false;
     }
 
     /*
