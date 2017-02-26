@@ -25,6 +25,7 @@
 		876933031E3410AD005D46A6 /* fosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876933021E3410AD005D46A6 /* fosTests.swift */; };
 		8769330E1E3410AD005D46A6 /* fosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8769330D1E3410AD005D46A6 /* fosUITests.swift */; };
 		87DC90351E522704007DC991 /* ScrollTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DC90341E522704007DC991 /* ScrollTableViewCell.swift */; };
+		87F8F5AA1E62BE01002ACB86 /* InstagramTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F8F5A91E62BE01002ACB86 /* InstagramTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		8769330D1E3410AD005D46A6 /* fosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fosUITests.swift; sourceTree = "<group>"; };
 		8769330F1E3410AD005D46A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87DC90341E522704007DC991 /* ScrollTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollTableViewCell.swift; sourceTree = "<group>"; };
+		87F8F5A91E62BE01002ACB86 /* InstagramTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramTableViewCell.swift; sourceTree = "<group>"; };
 		8BF61ABF8CF65B16D94F0945 /* Pods-fosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fosTests/Pods-fosTests.release.xcconfig"; sourceTree = "<group>"; };
 		A1B81875FBB2E916B9E6EDB3 /* Pods_fosUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fosUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBCE3430CA741E1DF0C1EF13 /* Pods-fosUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fosUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fosUITests/Pods-fosUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				873178971E4D99B600B54269 /* TwitterKitResources.bundle */,
 				873178981E4D99B600B54269 /* TwitterCore.framework */,
 				871113FB1E3E904A00110735 /* Main.storyboard */,
+				87F8F5A91E62BE01002ACB86 /* InstagramTableViewCell.swift */,
 				87DC90341E522704007DC991 /* ScrollTableViewCell.swift */,
 				873178921E4D8F3B00B54269 /* EventTableViewCell.swift */,
 				873178901E4D8D1700B54269 /* EventsViewController.swift */,
@@ -495,6 +498,7 @@
 				876932EE1E3410AC005D46A6 /* AppDelegate.swift in Sources */,
 				871114011E3E9C8500110735 /* NewsTableViewController.swift in Sources */,
 				87DC90351E522704007DC991 /* ScrollTableViewCell.swift in Sources */,
+				87F8F5AA1E62BE01002ACB86 /* InstagramTableViewCell.swift in Sources */,
 				873178911E4D8D1700B54269 /* EventsViewController.swift in Sources */,
 				871114031E4074E400110735 /* HomeViewController.swift in Sources */,
 			);

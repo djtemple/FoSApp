@@ -11,12 +11,27 @@ import TwitterKit
 import STTwitter
 import Alamofire
 
+struct instagramPost {
+    
+    var text: String
+    var profileImageURL: String
+    var userName: String
+    var timeStamp:String
+    var profileImage: UIImage
+    var postImage: UIImage
+}
+
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,TWTRTweetViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+   
     var imageArray = [UIImage]()
     // Hold all the loaded Tweets
     var tweets: [TWTRTweet] = []
+    
+    // holds the struct of instagram post
+    var instagram:[instagramPost] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,20 +50,66 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    // low res: 320x320, thumbnail: 150x150, standard res: 640x640
     func parseData(JSONData: Data) {
         do {
-            var readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .allowFragments) as? NSDictionary
-            // readableJSON contains the instagram post
+            var readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .allowFragments) as? [String:Any]
+            //print(readableJSON ?? "no object")
             
-            // prints the readable JSON to parse 
-            // here is a link if you want to see the JSON response as well:
-            //https://apigee.com/console/instagram?req=%7B%22resource%22%3A%22%22%2C%22params%22%3A%7B%22query%22%3A%7B%7D%2C%22template%22%3A%7B%7D%2C%22headers%22%3A%7B%7D%2C%22body%22%3A%7B%22attachmentFormat%22%3A%22mime%22%2C%22attachmentContentDisposition%22%3A%22form-data%22%7D%7D%2C%22verb%22%3A%22get%22%7D
-            print(readableJSON ?? "no object")
+            let datas = readableJSON?["data"] as? [[String:Any]]
+            // loop through the data. If there is more than one instagram post from the user
+            
+            for data in datas! {
+                //print(data)
+                // checks if captions is not empty
+                // cpations in JSON contain the text from the post, username, profile_picture, and created_time
+                
+                var text:String = ""
+                var timeStamp:String = ""
+                var username:String = ""
+                var profileURL:String = ""
+                
+                if let caption = data["caption"] as? [String: Any] {
+                    
+                    text = (caption["text"] as? String)!
+                    //print(text ?? "text nil")
+                    
+                    timeStamp = (caption["created_time"] as? String)!
+                    //print(timeStamp ?? "no created_time")
+                    
+                    // check to see if from is not empty
+                    if let from = caption["from"] as? [String: Any] {
+                        profileURL = (from["profile_picture"] as? String)!
+                        //print(profileImage ?? "profile_iamge == nil")
+                        username = (from["username"] as? String)!
+                        //print(username ?? "username is nil")
+                    }
+                }
+                
+                if let image = data["images"] as? [String:Any] {
+                    //print(image)
+                    if let std_Res = image["standard_resolution"] as? [String:Any] {
+                        let imageURL = std_Res["url"] as? String
+                        //print(imageURL)
+                        
+                        
+                        // need to convert the url into UIImage to store in the struct below
+                    }
+                    
+                }
+                
+                let post:instagramPost = instagramPost(text: text, profileImageURL: profileURL, userName: username, timeStamp: timeStamp, profileImage:#imageLiteral(resourceName: "instagramProfile"), postImage: #imageLiteral(resourceName: "cannot load image"))
+                
+                self.instagram.append(post)
+            }
+            
+            //print(self.instagram)
         }
         catch {
             print(error)
         }
     }
+
     
     func getTweets() {
         let twitter = STTwitterAPI(oAuthConsumerKey: "vGdyaBeBYWka2JwDQvHSLviCL", consumerSecret: "OTcbCMM9oW9D3wXVDp6gTpwkzRQzDBfDgm9AXfipLjH3pq0C0t", oauthToken: "826142454613020672-cRBbVSOOPhNBstNnPDin6NJl3swd8Wp", oauthTokenSecret: "yWmRoRJBb9oPx00od1FpUCzfS6XC48uxUJa9si85d2ryo")
@@ -85,9 +146,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDelegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Plus one for the header cell
-        return self.tweets.count + 1
+        return self.tweets.count + self.instagram.count + 1
     }
-    
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,8 +156,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let scrollCell = tableView.dequeueReusableCell(withIdentifier: "ScrollCell", for: indexPath as IndexPath) as! ScrollTableViewCell
             return scrollCell
         }
+            
+        // this is hardcoded for only one instagram post
+        else if (indexPath.row == 1) {
+            let instaCell = tableView.dequeueReusableCell(withIdentifier: "InstagramCell", for: indexPath as IndexPath) as! InstagramTableViewCell
+            instaCell.selectionStyle = UITableViewCellSelectionStyle.none
+            
+            
+            // need some error checking to make sure instagram is not empty array
+            
+            if self.instagram.count > 0 {
+                let post = self.instagram[0]
+            
+                instaCell.userNameLabel.text = post.userName
+            
+                // need to fill text from the post. Also need the cell to auto adjust height
+                instaCell.textDescriptionLabel.text = post.text
+                instaCell.textDescriptionLabel.numberOfLines = 0
+                
+                print(post.text)
+            
+                instaCell.profileImage.image = post.profileImage
+                instaCell.postImage.image = post.postImage
+            }
+            
+            
+            return instaCell
+        }
         else {
-            let tweet = tweets[indexPath.row - 1]
+            let tweet = tweets[indexPath.row - 2]
             let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath as IndexPath) as! TWTRTweetTableViewCell
             cell.tweetView.delegate = self
             cell.tweetView.showActionButtons = false
@@ -108,18 +195,29 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        /*
+         if(indexPath.row > 0) {
+         let tweet = tweets[indexPath.row - 1]
+         return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width:self.view.bounds.width, showingActions: false)
+         }
+         else {
+         return 109
+         }
+         */
         
-        if(indexPath.row > 0) {
-            let tweet = tweets[indexPath.row - 1]
-            
-            return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width:self.view.bounds.width, showingActions: false)
+        if(indexPath.row == 0 ) {
+            return 109
+        }
+        else if (indexPath.row == 1) {
+            return 515
         }
         else {
-            return 120
-            
+            let tweet = tweets[indexPath.row - 2]
+            return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width: self.view.bounds.width, showingActions: false)
         }
         
     }
+
     
     
     // leave it for now. This gets rid of the tweet actions in twttweetdetailviewcontroller

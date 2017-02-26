@@ -38,7 +38,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HsH-Ag-NqU" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="home-1" id="ei0-Ir-vdf"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="8St-ox-xrj">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8St-ox-xrj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -94,11 +94,75 @@
                                             <outlet property="scrollView" destination="i1i-sA-cid" id="cjL-xw-eR5"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TweetCell" rowHeight="82" id="IpM-kI-Nfh" customClass="TWTRTweetTableViewCell">
-                                        <rect key="frame" x="0.0" y="148" width="375" height="82"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="InstagramCell" rowHeight="406" id="IpM-kI-Nfh" customClass="InstagramTableViewCell" customModule="fos" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="148" width="375" height="406"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IpM-kI-Nfh" id="Kgv-Rh-YJe">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="81"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SMj-nx-Dcs">
+                                                    <rect key="frame" x="8" y="8" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="Gdk-SY-DeV"/>
+                                                        <constraint firstAttribute="width" constant="50" id="rJZ-sS-Hy1"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EWV-xz-lhc">
+                                                    <rect key="frame" x="322" y="11" width="45" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="Uac-eL-aOP"/>
+                                                        <constraint firstAttribute="width" constant="45" id="W5D-0k-yb7"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIK-bc-hHa">
+                                                    <rect key="frame" x="66" y="23" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uqE-ot-gy4">
+                                                    <rect key="frame" x="12" y="392" width="351" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mCP-Qw-YuU">
+                                                    <rect key="frame" x="27" y="64" width="320" height="320"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="320" id="H1k-QG-GCA"/>
+                                                        <constraint firstAttribute="width" constant="320" id="JEd-1b-J8y"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mCP-Qw-YuU" firstAttribute="top" secondItem="eIK-bc-hHa" secondAttribute="bottom" constant="20" id="2h7-ek-wCK"/>
+                                                <constraint firstAttribute="topMargin" secondItem="SMj-nx-Dcs" secondAttribute="top" id="659-wg-pgD"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="mCP-Qw-YuU" secondAttribute="trailing" constant="20" id="766-WB-ntC"/>
+                                                <constraint firstItem="mCP-Qw-YuU" firstAttribute="leading" secondItem="Kgv-Rh-YJe" secondAttribute="leadingMargin" constant="19" id="Cab-iP-3tp"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="EWV-xz-lhc" secondAttribute="trailing" id="Daj-j8-Pta"/>
+                                                <constraint firstItem="eIK-bc-hHa" firstAttribute="leading" secondItem="SMj-nx-Dcs" secondAttribute="trailing" constant="8" id="a9j-GE-Adz"/>
+                                                <constraint firstItem="uqE-ot-gy4" firstAttribute="leading" secondItem="Kgv-Rh-YJe" secondAttribute="leadingMargin" constant="4" id="hcp-oh-iKd"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="SMj-nx-Dcs" secondAttribute="leading" id="jZL-eE-575"/>
+                                                <constraint firstItem="EWV-xz-lhc" firstAttribute="top" secondItem="Kgv-Rh-YJe" secondAttribute="topMargin" constant="3" id="rTp-iq-Mxe"/>
+                                                <constraint firstItem="uqE-ot-gy4" firstAttribute="top" secondItem="Kgv-Rh-YJe" secondAttribute="topMargin" constant="384" id="uvZ-9z-UbL"/>
+                                                <constraint firstItem="eIK-bc-hHa" firstAttribute="top" secondItem="Kgv-Rh-YJe" secondAttribute="topMargin" constant="15" id="wcM-YW-MBn"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="uqE-ot-gy4" secondAttribute="trailing" constant="4" id="y29-0f-YaC"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="instagramImage" destination="EWV-xz-lhc" id="Wgg-Y8-Ixj"/>
+                                            <outlet property="postImage" destination="mCP-Qw-YuU" id="LCn-LU-5Lb"/>
+                                            <outlet property="profileImage" destination="SMj-nx-Dcs" id="TOV-Or-rJM"/>
+                                            <outlet property="textDescriptionLabel" destination="uqE-ot-gy4" id="1UB-ak-hQd"/>
+                                            <outlet property="userNameLabel" destination="eIK-bc-hHa" id="bhg-8h-wmb"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TweetCell" rowHeight="159" id="dTE-Rl-SMK" customClass="TWTRTweetTableViewCell">
+                                        <rect key="frame" x="0.0" y="554" width="375" height="159"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dTE-Rl-SMK" id="o08-pw-YgA">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="158"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -124,7 +188,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="deF-gB-Lyd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2012" y="137"/>
+            <point key="canvasLocation" x="2012" y="136.28185907046478"/>
         </scene>
         <!--Explore-->
         <scene sceneID="Q8y-yF-Btz">
@@ -132,7 +196,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hLX-QM-LbN" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Explore" image="folded-newspaper" id="LTe-xT-aOp"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="e5H-5y-ZWH">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="e5H-5y-ZWH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -498,7 +562,7 @@ Through meeting with a member of the LSE team, students will also have the oppor
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KiF-41-4Re" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Events" image="calendar-icon" id="itL-tR-t91"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="jfl-R6-2IM">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jfl-R6-2IM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
