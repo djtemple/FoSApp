@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-fos.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,7 +37,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1A3A30438FDE5A71484683F07DDCACF1</key>
+		<key>0A42B46A9F8EBA27E6E348495387DCDD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -42,7 +47,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C10D34BC2E7FAB9645F237F43F6B9A81</key>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B345358E91726901AA48349D6B438B32</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -1,12 +1,15 @@
 PODS:
+  - Alamofire (4.3.0)
   - STTwitter (0.2.6)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.3)
   - STTwitter
 
 SPEC CHECKSUMS:
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
   STTwitter: 30ee2f79eff78c3d633a1edc869e97db9c9ead59
 
-PODFILE CHECKSUM: d90534cd64c75db01327e42d8ba9ded131574573
+PODFILE CHECKSUM: 24e9356fafd3f534863799e6b25cc1781943b190
 
 COCOAPODS: 1.1.1

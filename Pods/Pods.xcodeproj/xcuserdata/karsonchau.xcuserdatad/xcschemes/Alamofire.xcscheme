@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '0A42B46A9F8EBA27E6E348495387DCDD'
-               BlueprintName = 'STTwitter'
+               BlueprintIdentifier = '88E9EC28B8B46C3631E6B242B50F4442'
+               BlueprintName = 'Alamofire'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'STTwitter.framework'>
+               BuildableName = 'Alamofire.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

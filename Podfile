@@ -10,6 +10,7 @@ target 'fos' do
   # Pods for fos
 
   pod ‘STTwitter’
+  pod 'Alamofire', '~> 4.3'
 
 
   target 'fosTests' do
