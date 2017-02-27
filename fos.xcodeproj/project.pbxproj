@@ -70,6 +70,7 @@
 		876933091E3410AD005D46A6 /* fosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8769330D1E3410AD005D46A6 /* fosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fosUITests.swift; sourceTree = "<group>"; };
 		8769330F1E3410AD005D46A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87A561AF1E63F0EC00557CFD /* fos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "fos-Bridging-Header.h"; sourceTree = "<group>"; };
 		87DC90341E522704007DC991 /* ScrollTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollTableViewCell.swift; sourceTree = "<group>"; };
 		87F8F5A91E62BE01002ACB86 /* InstagramTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramTableViewCell.swift; sourceTree = "<group>"; };
 		8BF61ABF8CF65B16D94F0945 /* Pods-fosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fosTests/Pods-fosTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -163,6 +164,7 @@
 				876932F61E3410AD005D46A6 /* LaunchScreen.storyboard */,
 				876932ED1E3410AC005D46A6 /* AppDelegate.swift */,
 				876932F91E3410AD005D46A6 /* Info.plist */,
+				87A561AF1E63F0EC00557CFD /* fos-Bridging-Header.h */,
 			);
 			path = fos;
 			sourceTree = "<group>";
@@ -274,6 +276,7 @@
 					876932E91E3410AC005D46A6 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 57934EN5G8;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					876932FD1E3410AD005D46A6 = {
@@ -651,6 +654,7 @@
 			baseConfigurationReference = CF9C65532CA29C0DA4CBDAED /* Pods-fos.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 57934EN5G8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -660,6 +664,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kachau.fos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "fos/fos-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -669,6 +675,7 @@
 			baseConfigurationReference = 3695F26409EDE41ED2AF37E3 /* Pods-fos.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 57934EN5G8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -678,6 +685,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kachau.fos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "fos/fos-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -15,10 +15,9 @@ struct instagramPost {
     
     var text: String
     var profileImageURL: String
+    var postImageURL:String
     var userName: String
     var timeStamp:String
-    var profileImage: UIImage
-    var postImage: UIImage
 }
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,TWTRTweetViewDelegate {
@@ -38,6 +37,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.getTweets()
         self.getInstagramPost()
         
+        self.tableView.reloadData()
     }
     
     func getInstagramPost() {
@@ -68,6 +68,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 var timeStamp:String = ""
                 var username:String = ""
                 var profileURL:String = ""
+                var postURL:String = ""
+                
+                //var profileImage:UIImage = UIImage(named: "instagramProfile")!
                 
                 if let caption = data["caption"] as? [String: Any] {
                     
@@ -80,6 +83,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     // check to see if from is not empty
                     if let from = caption["from"] as? [String: Any] {
                         profileURL = (from["profile_picture"] as? String)!
+                        
                         //print(profileImage ?? "profile_iamge == nil")
                         username = (from["username"] as? String)!
                         //print(username ?? "username is nil")
@@ -89,21 +93,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if let image = data["images"] as? [String:Any] {
                     //print(image)
                     if let std_Res = image["standard_resolution"] as? [String:Any] {
-                        let imageURL = std_Res["url"] as? String
-                        //print(imageURL)
+                        postURL = (std_Res["url"] as? String)!
                         
-                        
-                        // need to convert the url into UIImage to store in the struct below
                     }
                     
                 }
                 
-                let post:instagramPost = instagramPost(text: text, profileImageURL: profileURL, userName: username, timeStamp: timeStamp, profileImage:#imageLiteral(resourceName: "instagramProfile"), postImage: #imageLiteral(resourceName: "cannot load image"))
+                //let post:instagramPost = instagramPost(text: text, profileImageURL: profileURL, userName: username, timeStamp: timeStamp, profileImage: profileImage, postImage: #imageLiteral(resourceName: "cannot load image"))
+                
+                let post:instagramPost = instagramPost(text: text, profileImageURL: profileURL, postImageURL: postURL, userName: username, timeStamp: timeStamp)
                 
                 self.instagram.append(post)
             }
             
-            //print(self.instagram)
+            print(self.instagram.count)
         }
         catch {
             print(error)
@@ -146,7 +149,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDelegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Plus one for the header cell
-        return self.tweets.count + self.instagram.count + 1
+        return self.tweets.count + 1 + 1
     }
     
     
@@ -158,7 +161,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
             
         // this is hardcoded for only one instagram post
-        else if (indexPath.row == 1) {
+        else if (indexPath.row < (self.instagram.count + 1)) {
             let instaCell = tableView.dequeueReusableCell(withIdentifier: "InstagramCell", for: indexPath as IndexPath) as! InstagramTableViewCell
             instaCell.selectionStyle = UITableViewCellSelectionStyle.none
             
@@ -166,54 +169,68 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             // need some error checking to make sure instagram is not empty array
             
             if self.instagram.count > 0 {
-                let post = self.instagram[0]
+                let post = self.instagram[indexPath.row - 1]
             
                 instaCell.userNameLabel.text = post.userName
             
                 // need to fill text from the post. Also need the cell to auto adjust height
                 instaCell.textDescriptionLabel.text = post.text
                 instaCell.textDescriptionLabel.numberOfLines = 0
-                
-                print(post.text)
             
-                instaCell.profileImage.image = post.profileImage
-                instaCell.postImage.image = post.postImage
+                //instaCell.profileImage.image = post.profileImage
+                
+                instaCell.profileImage.sd_setImage(with: URL(string: post.profileImageURL))
+                instaCell.postImage.sd_setImage(with: URL(string: post.postImageURL), placeholderImage: #imageLiteral(resourceName: "cannot load image"), options: [])
+                
+                
+                //
+                
+                
+                //instaCell.postImage.image = post.postImageURL
+                
             }
             
             
             return instaCell
         }
         else {
-            let tweet = tweets[indexPath.row - 2]
+            
+            //let tweet = tweets[indexPath.row - self.instagram.count]
             let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath as IndexPath) as! TWTRTweetTableViewCell
-            cell.tweetView.delegate = self
-            cell.tweetView.showActionButtons = false
-            cell.configure(with: tweet)
+            let index = indexPath.row - (1+self.instagram.count)
+            
+            if(index < self.tweets.count && (index > 0)) {
+                let tweet = tweets[indexPath.row - 2]
+                 cell.tweetView.delegate = self
+                cell.tweetView.showActionButtons = false
+                cell.configure(with: tweet)
+
+                
+            }
             return cell
         }
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        /*
-         if(indexPath.row > 0) {
-         let tweet = tweets[indexPath.row - 1]
-         return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width:self.view.bounds.width, showingActions: false)
-         }
-         else {
-         return 109
-         }
-         */
-        
         if(indexPath.row == 0 ) {
-            return 109
+            return 130
         }
-        else if (indexPath.row == 1) {
+        else if (indexPath.row < (self.instagram.count + 1)) {
+            // height for instagram post need to be auto sized
             return 515
         }
         else {
-            let tweet = tweets[indexPath.row - 2]
-            return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width: self.view.bounds.width, showingActions: false)
+            let index = indexPath.row - (1+self.instagram.count)
+            
+            if(index < self.tweets.count && (index > 0)) {
+                let tweet = tweets[indexPath.row - 2]
+                return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width: self.view.bounds.width, showingActions: false)
+
+            }
+            else {
+                return 0
+            }
         }
         
     }

@@ -11,6 +11,7 @@ target 'fos' do
 
   pod ‘STTwitter’
   pod 'Alamofire', '~> 4.3'
+  pod 'SDWebImage'
 
 
   target 'fosTests' do

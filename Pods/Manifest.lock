@@ -1,15 +1,20 @@
 PODS:
   - Alamofire (4.3.0)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
   - STTwitter (0.2.6)
 
 DEPENDENCIES:
   - Alamofire (~> 4.3)
+  - SDWebImage
   - STTwitter
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   STTwitter: 30ee2f79eff78c3d633a1edc869e97db9c9ead59
 
-PODFILE CHECKSUM: 24e9356fafd3f534863799e6b25cc1781943b190
+PODFILE CHECKSUM: f1e0d03e8b6bf8cdf2cbe2791663120017ca0f85
 
 COCOAPODS: 1.1.1

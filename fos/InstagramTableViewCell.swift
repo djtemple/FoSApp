@@ -22,7 +22,12 @@ class InstagramTableViewCell: UITableViewCell {
         
         instagramImage.image = UIImage(named: "instagramLogo")
         postImage.image = UIImage(named: "cannot load image")
+        
+        
+        profileImage.layer.cornerRadius = profileImage.frame.size.width/2
+        profileImage.clipsToBounds = true
     }
+    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
