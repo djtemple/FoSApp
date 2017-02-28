@@ -11,6 +11,9 @@ target 'fos' do
 
   pod ‘STTwitter’
   pod 'Alamofire', '~> 4.3'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
 
 
   target 'fosTests' do

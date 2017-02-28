@@ -8,6 +8,9 @@
 
 import UIKit
 import MapKit
+import FacebookLogin
+import FacebookCore
+import FacebookShare
 
 class EventsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
