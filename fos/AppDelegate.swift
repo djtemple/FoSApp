@@ -9,7 +9,12 @@
 import UIKit
 import Fabric
 import TwitterKit
-
+<<<<<<< HEAD
+=======
+import FacebookShare
+import FacebookLogin
+import FacebookCore
+>>>>>>> cbe6df99a97209931d9084b7a03379d2da8f4b94
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,11 +28,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Twitter.sharedInstance().start(withConsumerKey: "vGdyaBeBYWka2JwDQvHSLviCL", consumerSecret: "OTcbCMM9oW9D3wXVDp6gTpwkzRQzDBfDgm9AXfipLjH3pq0C0t")
         Fabric.with([Twitter.self])
         
+<<<<<<< HEAD
         UIApplication.shared.statusBarStyle = .lightContent
 
         
         return true
+=======
+        return SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
+    
+    public func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool
+    {
+        return SDKApplicationDelegate.shared.application(app, open: url, options: options)
+>>>>>>> cbe6df99a97209931d9084b7a03379d2da8f4b94
+    }
+
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

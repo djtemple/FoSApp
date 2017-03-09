@@ -25,7 +25,13 @@
 		876933031E3410AD005D46A6 /* fosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876933021E3410AD005D46A6 /* fosTests.swift */; };
 		8769330E1E3410AD005D46A6 /* fosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8769330D1E3410AD005D46A6 /* fosUITests.swift */; };
 		87DC90351E522704007DC991 /* ScrollTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DC90341E522704007DC991 /* ScrollTableViewCell.swift */; };
+<<<<<<< HEAD
 		87F8F5AA1E62BE01002ACB86 /* InstagramTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F8F5A91E62BE01002ACB86 /* InstagramTableViewCell.swift */; };
+=======
+		92A3BBC61E663C41002A465B /* FacebookCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A3BBC31E663C41002A465B /* FacebookCore.framework */; };
+		92A3BBC71E663C41002A465B /* FacebookLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A3BBC41E663C41002A465B /* FacebookLogin.framework */; };
+		92A3BBC81E663C41002A465B /* FacebookShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A3BBC51E663C41002A465B /* FacebookShare.framework */; };
+>>>>>>> cbe6df99a97209931d9084b7a03379d2da8f4b94
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +80,9 @@
 		87DC90341E522704007DC991 /* ScrollTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollTableViewCell.swift; sourceTree = "<group>"; };
 		87F8F5A91E62BE01002ACB86 /* InstagramTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramTableViewCell.swift; sourceTree = "<group>"; };
 		8BF61ABF8CF65B16D94F0945 /* Pods-fosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fosTests/Pods-fosTests.release.xcconfig"; sourceTree = "<group>"; };
+		92A3BBC31E663C41002A465B /* FacebookCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookCore.framework; path = "../../../Library/Developer/Xcode/DerivedData/fos-dlordltubhjjvihkeceflomvanoq/Build/Products/Debug-iphonesimulator/FacebookCore/FacebookCore.framework"; sourceTree = "<group>"; };
+		92A3BBC41E663C41002A465B /* FacebookLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookLogin.framework; path = "../../../Library/Developer/Xcode/DerivedData/fos-dlordltubhjjvihkeceflomvanoq/Build/Products/Debug-iphonesimulator/FacebookLogin/FacebookLogin.framework"; sourceTree = "<group>"; };
+		92A3BBC51E663C41002A465B /* FacebookShare.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookShare.framework; path = "../../../Library/Developer/Xcode/DerivedData/fos-dlordltubhjjvihkeceflomvanoq/Build/Products/Debug-iphonesimulator/FacebookShare/FacebookShare.framework"; sourceTree = "<group>"; };
 		A1B81875FBB2E916B9E6EDB3 /* Pods_fosUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fosUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBCE3430CA741E1DF0C1EF13 /* Pods-fosUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fosUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fosUITests/Pods-fosUITests.release.xcconfig"; sourceTree = "<group>"; };
 		CF9C65532CA29C0DA4CBDAED /* Pods-fos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fos.debug.xcconfig"; path = "Pods/Target Support Files/Pods-fos/Pods-fos.debug.xcconfig"; sourceTree = "<group>"; };
@@ -85,6 +94,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92A3BBC61E663C41002A465B /* FacebookCore.framework in Frameworks */,
+				92A3BBC71E663C41002A465B /* FacebookLogin.framework in Frameworks */,
+				92A3BBC81E663C41002A465B /* FacebookShare.framework in Frameworks */,
 				873178991E4D99B600B54269 /* Fabric.framework in Frameworks */,
 				8731789C1E4D99B600B54269 /* TwitterCore.framework in Frameworks */,
 				8731789A1E4D99B600B54269 /* TwitterKit.framework in Frameworks */,
@@ -190,6 +202,9 @@
 		9E3C386F7630D3CEFD7FE32E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				92A3BBC31E663C41002A465B /* FacebookCore.framework */,
+				92A3BBC41E663C41002A465B /* FacebookLogin.framework */,
+				92A3BBC51E663C41002A465B /* FacebookShare.framework */,
 				5C25B7F04ED9B526CDEAB99C /* Pods_fos.framework */,
 				F77ACF1945224B95F9F7C2D5 /* Pods_fosTests.framework */,
 				A1B81875FBB2E916B9E6EDB3 /* Pods_fosUITests.framework */,

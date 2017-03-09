@@ -34,11 +34,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.getTweets()
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        
         self.getInstagramPost()
+        self.getTweets()
+        
         
         self.tableView.reloadData()
     }
+    
     
     func getInstagramPost() {
         // access token is at the end of the url string
@@ -99,8 +104,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                 }
                 
-                //let post:instagramPost = instagramPost(text: text, profileImageURL: profileURL, userName: username, timeStamp: timeStamp, profileImage: profileImage, postImage: #imageLiteral(resourceName: "cannot load image"))
-                
                 let post:instagramPost = instagramPost(text: text, profileImageURL: profileURL, postImageURL: postURL, userName: username, timeStamp: timeStamp)
                 
                 self.instagram.append(post)
@@ -149,7 +152,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDelegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Plus one for the header cell
-        return self.tweets.count + 1 + 1
+        
+        print(self.tweets.count + self.instagram.count + 1)
+        return self.tweets.count + self.instagram.count + 1
     }
     
     
@@ -180,7 +185,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 //instaCell.profileImage.image = post.profileImage
                 
                 instaCell.profileImage.sd_setImage(with: URL(string: post.profileImageURL))
-                instaCell.postImage.sd_setImage(with: URL(string: post.postImageURL), placeholderImage: #imageLiteral(resourceName: "cannot load image"), options: [])
+                instaCell.postImage.sd_setImage(with: URL(string: post.postImageURL), placeholderImage: #imageLiteral(resourceName: "cannot load image"), options: .highPriority)
                 
                 
                 //
@@ -199,8 +204,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath as IndexPath) as! TWTRTweetTableViewCell
             let index = indexPath.row - (1+self.instagram.count)
             
-            if(index < self.tweets.count && (index > 0)) {
-                let tweet = tweets[indexPath.row - 2]
+            if(index < (self.tweets.count) && (index > 0)) {
+                let tweet = tweets[index]
                  cell.tweetView.delegate = self
                 cell.tweetView.showActionButtons = false
                 cell.configure(with: tweet)
@@ -218,13 +223,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         else if (indexPath.row < (self.instagram.count + 1)) {
             // height for instagram post need to be auto sized
-            return 515
+            return 510
         }
         else {
-            let index = indexPath.row - (1+self.instagram.count)
+            let index = indexPath.row - (1 + self.instagram.count)
+            //print(index)
             
             if(index < self.tweets.count && (index > 0)) {
-                let tweet = tweets[indexPath.row - 2]
+                let tweet = tweets[index]
                 return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width: self.view.bounds.width, showingActions: false)
 
             }
