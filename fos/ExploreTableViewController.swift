@@ -2,96 +2,80 @@
 //  ExploreTableViewController.swift
 //  fos
 //
-//  Created by Karson Chau on 2017-01-29.
+//  Created by Karson Chau on 2017-03-16.
 //  Copyright © 2017 Karson Chau. All rights reserved.
 //
 
 import UIKit
 
 class ExploreTableViewController: UITableViewController {
-
+    
+    let cellTitles = ["Advisor","Room Booking","Room Finder", "Research","FAQ"]
+    
+    let webLinks = ["https://www.ucalgary.ca/science/undergraduate/usc/advising/contact_program_advisor","http://workrooms.ucalgary.ca/rooms.php?s=workrooms", "http://ucmapspro.ucalgary.ca/RoomFinder/", "https://www.ucalgary.ca/science/research", ""]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
-        
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
         
+        return cellTitles.count
     }
-
-    /*
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ExploreCell", for: indexPath) as! ExploreTableViewCell
+        
+        cell.titleLabel.text = cellTitles[indexPath.row]
+        
         // Configure the cell...
-
+        
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
+    
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        
+        
+        if(segue.identifier == "ShowResource") {
+            
+            let view:ResourceViewController = (segue.destination as? ResourceViewController)!
+            
+            
+            if let selectedCell = sender as? ExploreTableViewCell {
+                let indexPath = tableView.indexPath(for: selectedCell)
+                
+                view.weblink = webLinks[(indexPath?.row)!]
+                
+                view.title = cellTitles[(indexPath?.row)!]
+            }
+            
+            
+            /*
+             if let selectedPost = sender as? InstagramTableViewCell {
+             let indexPath = tableView.indexPath(for: selectedPost)!
+             let expandedPost = self.instagram[indexPath.row - 1]
+             view.post = expandedPost
+             
+             }
+             */
+        }
+ 
+         
     }
-    */
-
+    
+    
 }

@@ -25,6 +25,9 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.19.0):
     - FBSDKCoreKit
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
   - STTwitter (0.2.6)
 
 DEPENDENCIES:
@@ -32,6 +35,7 @@ DEPENDENCIES:
   - FacebookCore
   - FacebookLogin
   - FacebookShare
+  - SDWebImage
   - STTwitter
 
 SPEC CHECKSUMS:
@@ -43,8 +47,9 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
   FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
   FBSDKShareKit: 5953758366278430dc322d5cdc906db361ed7f81
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   STTwitter: 30ee2f79eff78c3d633a1edc869e97db9c9ead59
 
-PODFILE CHECKSUM: 4a8a0d3534db9f49710a52ca0f486f6a7e45f8a0
+PODFILE CHECKSUM: 281af7480e06caa56c9ef7a0ea00f33730878adc
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.1.1

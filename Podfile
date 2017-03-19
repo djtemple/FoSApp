@@ -14,7 +14,7 @@ target 'fos' do
   pod 'FacebookCore'
   pod 'FacebookLogin'
   pod 'FacebookShare'
-
+  pod 'SDWebImage'
 
   target 'fosTests' do
     inherit! :search_paths

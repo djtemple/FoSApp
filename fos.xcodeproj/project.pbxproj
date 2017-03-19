@@ -11,7 +11,6 @@
 		29D229043F25B4B8949ACABF /* Pods_fos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C25B7F04ED9B526CDEAB99C /* Pods_fos.framework */; };
 		41BA2AB0ACCA8867BEC9413B /* Pods_fosUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B81875FBB2E916B9E6EDB3 /* Pods_fosUITests.framework */; };
 		871113FD1E3E904A00110735 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 871113FB1E3E904A00110735 /* Main.storyboard */; };
-		871114011E3E9C8500110735 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871114001E3E9C8500110735 /* NewsTableViewController.swift */; };
 		871114031E4074E400110735 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871114021E4074E400110735 /* HomeViewController.swift */; };
 		873178911E4D8D1700B54269 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873178901E4D8D1700B54269 /* EventsViewController.swift */; };
 		873178931E4D8F3B00B54269 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873178921E4D8F3B00B54269 /* EventTableViewCell.swift */; };
@@ -24,6 +23,12 @@
 		876932F81E3410AD005D46A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 876932F61E3410AD005D46A6 /* LaunchScreen.storyboard */; };
 		876933031E3410AD005D46A6 /* fosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876933021E3410AD005D46A6 /* fosTests.swift */; };
 		8769330E1E3410AD005D46A6 /* fosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8769330D1E3410AD005D46A6 /* fosUITests.swift */; };
+		87BD94CD1E7E3D2100A65426 /* InstagramPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94CC1E7E3D2100A65426 /* InstagramPostTableViewCell.swift */; };
+		87BD94D21E7E3FF900A65426 /* InstagramTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94D11E7E3FF900A65426 /* InstagramTableViewController.swift */; };
+		87BD94D41E7E402100A65426 /* InstagramTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94D31E7E402100A65426 /* InstagramTableViewCell.swift */; };
+		87BD94D81E7E47A300A65426 /* ExploreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94D71E7E47A300A65426 /* ExploreTableViewController.swift */; };
+		87BD94DA1E7E47C400A65426 /* ExploreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94D91E7E47C400A65426 /* ExploreTableViewCell.swift */; };
+		87BD94DC1E7E47DA00A65426 /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94DB1E7E47DA00A65426 /* ResourceViewController.swift */; };
 		87DC90351E522704007DC991 /* ScrollTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DC90341E522704007DC991 /* ScrollTableViewCell.swift */; };
 		92A3BBC61E663C41002A465B /* FacebookCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A3BBC31E663C41002A465B /* FacebookCore.framework */; };
 		92A3BBC71E663C41002A465B /* FacebookLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A3BBC41E663C41002A465B /* FacebookLogin.framework */; };
@@ -53,7 +58,6 @@
 		3695F26409EDE41ED2AF37E3 /* Pods-fos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fos.release.xcconfig"; path = "Pods/Target Support Files/Pods-fos/Pods-fos.release.xcconfig"; sourceTree = "<group>"; };
 		5C25B7F04ED9B526CDEAB99C /* Pods_fos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		871113FC1E3E904A00110735 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		871114001E3E9C8500110735 /* NewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
 		871114021E4074E400110735 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		873178901E4D8D1700B54269 /* EventsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		873178921E4D8F3B00B54269 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
@@ -72,6 +76,13 @@
 		876933091E3410AD005D46A6 /* fosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8769330D1E3410AD005D46A6 /* fosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fosUITests.swift; sourceTree = "<group>"; };
 		8769330F1E3410AD005D46A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87BD94CC1E7E3D2100A65426 /* InstagramPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramPostTableViewCell.swift; sourceTree = "<group>"; };
+		87BD94CE1E7E3FC200A65426 /* fos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "fos-Bridging-Header.h"; sourceTree = "<group>"; };
+		87BD94D11E7E3FF900A65426 /* InstagramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramTableViewController.swift; sourceTree = "<group>"; };
+		87BD94D31E7E402100A65426 /* InstagramTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramTableViewCell.swift; sourceTree = "<group>"; };
+		87BD94D71E7E47A300A65426 /* ExploreTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreTableViewController.swift; sourceTree = "<group>"; };
+		87BD94D91E7E47C400A65426 /* ExploreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreTableViewCell.swift; sourceTree = "<group>"; };
+		87BD94DB1E7E47DA00A65426 /* ResourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
 		87DC90341E522704007DC991 /* ScrollTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollTableViewCell.swift; sourceTree = "<group>"; };
 		8BF61ABF8CF65B16D94F0945 /* Pods-fosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fosTests/Pods-fosTests.release.xcconfig"; sourceTree = "<group>"; };
 		92A3BBC31E663C41002A465B /* FacebookCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookCore.framework; path = "../../../Library/Developer/Xcode/DerivedData/fos-dlordltubhjjvihkeceflomvanoq/Build/Products/Debug-iphonesimulator/FacebookCore/FacebookCore.framework"; sourceTree = "<group>"; };
@@ -159,16 +170,15 @@
 				873178961E4D99B600B54269 /* TwitterKit.framework */,
 				873178971E4D99B600B54269 /* TwitterKitResources.bundle */,
 				873178981E4D99B600B54269 /* TwitterCore.framework */,
-				871113FB1E3E904A00110735 /* Main.storyboard */,
-				87DC90341E522704007DC991 /* ScrollTableViewCell.swift */,
-				873178921E4D8F3B00B54269 /* EventTableViewCell.swift */,
-				873178901E4D8D1700B54269 /* EventsViewController.swift */,
-				871114001E3E9C8500110735 /* NewsTableViewController.swift */,
-				871114021E4074E400110735 /* HomeViewController.swift */,
+				87BD94CB1E7E3CB300A65426 /* Home */,
+				87BD94D51E7E46B700A65426 /* Explore */,
+				87BD94D61E7E46C500A65426 /* Events */,
 				876932F41E3410AD005D46A6 /* Assets.xcassets */,
+				871113FB1E3E904A00110735 /* Main.storyboard */,
 				876932F61E3410AD005D46A6 /* LaunchScreen.storyboard */,
 				876932ED1E3410AC005D46A6 /* AppDelegate.swift */,
 				876932F91E3410AD005D46A6 /* Info.plist */,
+				87BD94CE1E7E3FC200A65426 /* fos-Bridging-Header.h */,
 			);
 			path = fos;
 			sourceTree = "<group>";
@@ -189,6 +199,37 @@
 				8769330F1E3410AD005D46A6 /* Info.plist */,
 			);
 			path = fosUITests;
+			sourceTree = "<group>";
+		};
+		87BD94CB1E7E3CB300A65426 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				871114021E4074E400110735 /* HomeViewController.swift */,
+				87BD94CC1E7E3D2100A65426 /* InstagramPostTableViewCell.swift */,
+				87BD94D11E7E3FF900A65426 /* InstagramTableViewController.swift */,
+				87BD94D31E7E402100A65426 /* InstagramTableViewCell.swift */,
+				87DC90341E522704007DC991 /* ScrollTableViewCell.swift */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		87BD94D51E7E46B700A65426 /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				87BD94D71E7E47A300A65426 /* ExploreTableViewController.swift */,
+				87BD94D91E7E47C400A65426 /* ExploreTableViewCell.swift */,
+				87BD94DB1E7E47DA00A65426 /* ResourceViewController.swift */,
+			);
+			name = Explore;
+			sourceTree = "<group>";
+		};
+		87BD94D61E7E46C500A65426 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				873178921E4D8F3B00B54269 /* EventTableViewCell.swift */,
+				873178901E4D8D1700B54269 /* EventsViewController.swift */,
+			);
+			name = Events;
 			sourceTree = "<group>";
 		};
 		9E3C386F7630D3CEFD7FE32E /* Frameworks */ = {
@@ -283,6 +324,7 @@
 					876932E91E3410AC005D46A6 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 57934EN5G8;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					876932FD1E3410AD005D46A6 = {
@@ -503,12 +545,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BD94DA1E7E47C400A65426 /* ExploreTableViewCell.swift in Sources */,
+				87BD94D81E7E47A300A65426 /* ExploreTableViewController.swift in Sources */,
+				87BD94DC1E7E47DA00A65426 /* ResourceViewController.swift in Sources */,
 				873178931E4D8F3B00B54269 /* EventTableViewCell.swift in Sources */,
 				876932EE1E3410AC005D46A6 /* AppDelegate.swift in Sources */,
-				871114011E3E9C8500110735 /* NewsTableViewController.swift in Sources */,
+				87BD94D21E7E3FF900A65426 /* InstagramTableViewController.swift in Sources */,
+				87BD94CD1E7E3D2100A65426 /* InstagramPostTableViewCell.swift in Sources */,
 				87DC90351E522704007DC991 /* ScrollTableViewCell.swift in Sources */,
 				873178911E4D8D1700B54269 /* EventsViewController.swift in Sources */,
 				871114031E4074E400110735 /* HomeViewController.swift in Sources */,
+				87BD94D41E7E402100A65426 /* InstagramTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +706,7 @@
 			baseConfigurationReference = CF9C65532CA29C0DA4CBDAED /* Pods-fos.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 57934EN5G8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -668,6 +716,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kachau.fos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "fos/fos-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -677,6 +727,7 @@
 			baseConfigurationReference = 3695F26409EDE41ED2AF37E3 /* Pods-fos.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 57934EN5G8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -686,6 +737,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kachau.fos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "fos/fos-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -18,7 +18,7 @@ class ScrollTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        imageArray = [#imageLiteral(resourceName: "slide 1"), #imageLiteral(resourceName: "darwin_lecture_shoutout2017_2")]
+        imageArray = [#imageLiteral(resourceName: "slide 1"), #imageLiteral(resourceName: "slide2"), #imageLiteral(resourceName: "slide1"), #imageLiteral(resourceName: "city_11"), #imageLiteral(resourceName: "city22")]
         for i in 0..<imageArray.count {
             let iView = UIImageView()
             iView.image = imageArray[i]
