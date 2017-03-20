@@ -11,13 +11,17 @@ import UIKit
 class ResourceViewController: UIViewController {
 
     @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var activity: UIActivityIndicatorView!
+    
     var weblink:String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print(weblink ?? nil)
-        
+        self.loadAddress()
+    }
+    
+    func loadAddress() {
         let url:NSURL?
         
         if weblink == nil {
@@ -28,8 +32,15 @@ class ResourceViewController: UIViewController {
         }
         
         webView.loadRequest(NSURLRequest(url: url! as URL) as URLRequest)
+    }
+    
+    func webViewDidStartLoad(_: UIWebView) {
+        activity.startAnimating()
         
-        // Do any additional setup after loading the view.
+    }
+    
+    func webViewDidFinishLoad(_:UIWebView) {
+        activity.stopAnimating()
     }
     
 

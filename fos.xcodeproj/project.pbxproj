@@ -705,6 +705,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CF9C65532CA29C0DA4CBDAED /* Pods-fos.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 57934EN5G8;
@@ -726,6 +727,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3695F26409EDE41ED2AF37E3 /* Pods-fos.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 57934EN5G8;

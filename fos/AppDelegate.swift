@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Twitter.sharedInstance().start(withConsumerKey: "vGdyaBeBYWka2JwDQvHSLviCL", consumerSecret: "OTcbCMM9oW9D3wXVDp6gTpwkzRQzDBfDgm9AXfipLjH3pq0C0t")
         Fabric.with([Twitter.self])
         
+        UIApplication.shared.statusBarStyle =   UIStatusBarStyle.lightContent
+        
         return SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     

@@ -10,9 +10,9 @@ import UIKit
 
 class ExploreTableViewController: UITableViewController {
     
-    let cellTitles = ["Advisor","Room Booking","Room Finder", "Research","FAQ"]
+    let cellTitles = ["Advisor", "Workroom Booking","Room Finder", "Research", "FAQ"]
     
-    let webLinks = ["https://www.ucalgary.ca/science/undergraduate/usc/advising/contact_program_advisor","http://workrooms.ucalgary.ca/rooms.php?s=workrooms", "http://ucmapspro.ucalgary.ca/RoomFinder/", "https://www.ucalgary.ca/science/research", ""]
+    let webLinks = ["https://www.ucalgary.ca/science/undergraduate/usc/advising/contact_program_advisor","http://workrooms.ucalgary.ca/rooms.php?s=workrooms", "http://ucmapspro.ucalgary.ca/RoomFinder/", "https://www.ucalgary.ca/science/research", "http://www.ucalgary.ca/science/undergraduate/usc/faq"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +54,6 @@ class ExploreTableViewController: UITableViewController {
             
             let view:ResourceViewController = (segue.destination as? ResourceViewController)!
             
-            
             if let selectedCell = sender as? ExploreTableViewCell {
                 let indexPath = tableView.indexPath(for: selectedCell)
                 
@@ -63,15 +62,6 @@ class ExploreTableViewController: UITableViewController {
                 view.title = cellTitles[(indexPath?.row)!]
             }
             
-            
-            /*
-             if let selectedPost = sender as? InstagramTableViewCell {
-             let indexPath = tableView.indexPath(for: selectedPost)!
-             let expandedPost = self.instagram[indexPath.row - 1]
-             view.post = expandedPost
-             
-             }
-             */
         }
  
          

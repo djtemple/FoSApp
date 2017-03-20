@@ -37,9 +37,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // hides the nav bar when scrolling
         //navigationController?.hidesBarsOnSwipe = true
         
+        self.getInstagramPost()
         
         self.getTweets()
-        self.getInstagramPost()
+        
         
     }
     
