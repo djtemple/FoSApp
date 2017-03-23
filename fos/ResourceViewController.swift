@@ -36,7 +36,6 @@ class ResourceViewController: UIViewController {
     
     func webViewDidStartLoad(_: UIWebView) {
         activity.startAnimating()
-        
     }
     
     func webViewDidFinishLoad(_:UIWebView) {

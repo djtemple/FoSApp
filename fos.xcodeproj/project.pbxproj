@@ -30,6 +30,12 @@
 		87BD94DA1E7E47C400A65426 /* ExploreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94D91E7E47C400A65426 /* ExploreTableViewCell.swift */; };
 		87BD94DC1E7E47DA00A65426 /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94DB1E7E47DA00A65426 /* ResourceViewController.swift */; };
 		87DC90351E522704007DC991 /* ScrollTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DC90341E522704007DC991 /* ScrollTableViewCell.swift */; };
+		87E0FCA31E8244340079A99F /* EventDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E0FCA21E8244340079A99F /* EventDetailsTableViewController.swift */; };
+		87E0FCA51E8246520079A99F /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E0FCA41E8246520079A99F /* ImageTableViewCell.swift */; };
+		87E0FCA71E8246710079A99F /* NameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E0FCA61E8246710079A99F /* NameTableViewCell.swift */; };
+		87E0FCA91E8246970079A99F /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E0FCA81E8246970079A99F /* ButtonTableViewCell.swift */; };
+		87E0FCAB1E8246B30079A99F /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E0FCAA1E8246B30079A99F /* LocationTableViewCell.swift */; };
+		87E0FCAD1E8246C30079A99F /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E0FCAC1E8246C30079A99F /* DetailTableViewCell.swift */; };
 		92A3BBC61E663C41002A465B /* FacebookCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A3BBC31E663C41002A465B /* FacebookCore.framework */; };
 		92A3BBC71E663C41002A465B /* FacebookLogin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A3BBC41E663C41002A465B /* FacebookLogin.framework */; };
 		92A3BBC81E663C41002A465B /* FacebookShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92A3BBC51E663C41002A465B /* FacebookShare.framework */; };
@@ -84,6 +90,12 @@
 		87BD94D91E7E47C400A65426 /* ExploreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExploreTableViewCell.swift; sourceTree = "<group>"; };
 		87BD94DB1E7E47DA00A65426 /* ResourceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
 		87DC90341E522704007DC991 /* ScrollTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollTableViewCell.swift; sourceTree = "<group>"; };
+		87E0FCA21E8244340079A99F /* EventDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsTableViewController.swift; sourceTree = "<group>"; };
+		87E0FCA41E8246520079A99F /* ImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
+		87E0FCA61E8246710079A99F /* NameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameTableViewCell.swift; sourceTree = "<group>"; };
+		87E0FCA81E8246970079A99F /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
+		87E0FCAA1E8246B30079A99F /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
+		87E0FCAC1E8246C30079A99F /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		8BF61ABF8CF65B16D94F0945 /* Pods-fosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fosTests/Pods-fosTests.release.xcconfig"; sourceTree = "<group>"; };
 		92A3BBC31E663C41002A465B /* FacebookCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookCore.framework; path = "../../../Library/Developer/Xcode/DerivedData/fos-dlordltubhjjvihkeceflomvanoq/Build/Products/Debug-iphonesimulator/FacebookCore/FacebookCore.framework"; sourceTree = "<group>"; };
 		92A3BBC41E663C41002A465B /* FacebookLogin.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookLogin.framework; path = "../../../Library/Developer/Xcode/DerivedData/fos-dlordltubhjjvihkeceflomvanoq/Build/Products/Debug-iphonesimulator/FacebookLogin/FacebookLogin.framework"; sourceTree = "<group>"; };
@@ -174,6 +186,7 @@
 				87BD94D51E7E46B700A65426 /* Explore */,
 				87BD94D61E7E46C500A65426 /* Events */,
 				876932F41E3410AD005D46A6 /* Assets.xcassets */,
+				87E0FCA11E82440F0079A99F /* Test Event */,
 				871113FB1E3E904A00110735 /* Main.storyboard */,
 				876932F61E3410AD005D46A6 /* LaunchScreen.storyboard */,
 				876932ED1E3410AC005D46A6 /* AppDelegate.swift */,
@@ -230,6 +243,19 @@
 				873178901E4D8D1700B54269 /* EventsViewController.swift */,
 			);
 			name = Events;
+			sourceTree = "<group>";
+		};
+		87E0FCA11E82440F0079A99F /* Test Event */ = {
+			isa = PBXGroup;
+			children = (
+				87E0FCA21E8244340079A99F /* EventDetailsTableViewController.swift */,
+				87E0FCA41E8246520079A99F /* ImageTableViewCell.swift */,
+				87E0FCA61E8246710079A99F /* NameTableViewCell.swift */,
+				87E0FCA81E8246970079A99F /* ButtonTableViewCell.swift */,
+				87E0FCAA1E8246B30079A99F /* LocationTableViewCell.swift */,
+				87E0FCAC1E8246C30079A99F /* DetailTableViewCell.swift */,
+			);
+			name = "Test Event";
 			sourceTree = "<group>";
 		};
 		9E3C386F7630D3CEFD7FE32E /* Frameworks */ = {
@@ -546,16 +572,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				87BD94DA1E7E47C400A65426 /* ExploreTableViewCell.swift in Sources */,
+				87E0FCAD1E8246C30079A99F /* DetailTableViewCell.swift in Sources */,
 				87BD94D81E7E47A300A65426 /* ExploreTableViewController.swift in Sources */,
+				87E0FCAB1E8246B30079A99F /* LocationTableViewCell.swift in Sources */,
+				87E0FCA71E8246710079A99F /* NameTableViewCell.swift in Sources */,
 				87BD94DC1E7E47DA00A65426 /* ResourceViewController.swift in Sources */,
 				873178931E4D8F3B00B54269 /* EventTableViewCell.swift in Sources */,
 				876932EE1E3410AC005D46A6 /* AppDelegate.swift in Sources */,
 				87BD94D21E7E3FF900A65426 /* InstagramTableViewController.swift in Sources */,
 				87BD94CD1E7E3D2100A65426 /* InstagramPostTableViewCell.swift in Sources */,
 				87DC90351E522704007DC991 /* ScrollTableViewCell.swift in Sources */,
+				87E0FCA51E8246520079A99F /* ImageTableViewCell.swift in Sources */,
 				873178911E4D8D1700B54269 /* EventsViewController.swift in Sources */,
 				871114031E4074E400110735 /* HomeViewController.swift in Sources */,
+				87E0FCA91E8246970079A99F /* ButtonTableViewCell.swift in Sources */,
 				87BD94D41E7E402100A65426 /* InstagramTableViewCell.swift in Sources */,
+				87E0FCA31E8244340079A99F /* EventDetailsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

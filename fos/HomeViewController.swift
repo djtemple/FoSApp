@@ -23,8 +23,6 @@ struct instagramPost {
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,TWTRTweetViewDelegate {
     
-    
-    
     @IBOutlet weak var tableView: UITableView!
     
     var imageArray = [UIImage]()
@@ -37,11 +35,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // hides the nav bar when scrolling
         //navigationController?.hidesBarsOnSwipe = true
         
+        self.tableView.alwaysBounceVertical = false
+
+        
         self.getInstagramPost()
         
         self.getTweets()
-        
-        
     }
     
     func getInstagramPost() {
@@ -84,8 +83,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     text = (caption["text"] as? String)!
                     //print(text ?? "text nil")
                     
-                    timeStamp = (caption["created_time"] as? String)!
+                    let createdTime = (caption["created_time"] as? String)!
                     //print(timeStamp ?? "no created_time")
+                    
+                    let date = NSDate(timeIntervalSince1970: Double(createdTime)!)
+                    let dateFormatter = DateFormatter()
+                    //dateFormatter.timeStyle = DateFormatter.Style.medium
+                    //dateFormatter.dateStyle = DateFormatter.Style.short
+                    dateFormatter.dateFormat = "E MMM DD HH:mm y"
+                    timeStamp = dateFormatter.string(from: date as Date)
+                    
+                    //print(timeStamp)
                     
                     // check to see if from is not empty
                     if let from = caption["from"] as? [String: Any] {
@@ -100,10 +108,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     //print(image)
                     if let std_Res = image["standard_resolution"] as? [String:Any] {
                         postURL = (std_Res["url"] as? String)!
-                        //print(imageURL)
-                        
-                        
-                        // need to convert the url into UIImage to store in the struct below
                     }
                     
                 }
@@ -139,7 +143,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
         
-        twitter?.getHomeTimeline(sinceID: nil, count: 20, successBlock: { (statuses) in
+        twitter?.getHomeTimeline(sinceID: nil, count: 40, successBlock: { (statuses) in
             //print(statuses!)
             
             self.tweets = TWTRTweet.tweets(withJSONArray: statuses!) as! [TWTRTweet]

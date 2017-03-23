@@ -10,9 +10,9 @@ import UIKit
 
 class ExploreTableViewController: UITableViewController {
     
-    let cellTitles = ["Advisor", "Workroom Booking","Room Finder", "Research", "FAQ"]
+    let cellTitles = ["Advisor", "Calendar","Workroom Booking","Room Finder", "Research", "FAQ"]
     
-    let webLinks = ["https://www.ucalgary.ca/science/undergraduate/usc/advising/contact_program_advisor","http://workrooms.ucalgary.ca/rooms.php?s=workrooms", "http://ucmapspro.ucalgary.ca/RoomFinder/", "https://www.ucalgary.ca/science/research", "http://www.ucalgary.ca/science/undergraduate/usc/faq"]
+    let webLinks = ["https://www.ucalgary.ca/science/undergraduate/usc/advising/contact_program_advisor","http://www.ucalgary.ca/pubs/calendar/current/academic-schedule.html","http://workrooms.ucalgary.ca/rooms.php?s=workrooms", "http://ucmapspro.ucalgary.ca/RoomFinder/", "https://www.ucalgary.ca/science/research", "http://www.ucalgary.ca/science/undergraduate/usc/faq"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,7 @@ class ExploreTableViewController: UITableViewController {
         return cellTitles.count
     }
     
-    
+    // MARK: - Table view cell configure
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExploreCell", for: indexPath) as! ExploreTableViewCell
         
