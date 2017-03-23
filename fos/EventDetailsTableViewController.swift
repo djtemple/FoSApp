@@ -14,9 +14,7 @@ class EventDetailsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-    
-        
+
         if event == nil {
             event?.address = "not working"
             event?.city = "not working"
@@ -69,12 +67,7 @@ class EventDetailsTableViewController: UITableViewController {
         if (indexPath.row == 0) {
             let imageCell = tableView.dequeueReusableCell(withIdentifier: "ImageCell", for: indexPath as IndexPath) as! ImageTableViewCell
             
-            //instaCell.profileImage.sd_setImage(with: URL(string: post.profileImageURL))
-            //imageCell.eventImage.sd_setImage(with: URL(string:(self.event?.eventImageURL)!))
-            
             imageCell.eventImage.sd_setImage(with: URL(string: (self.event?.eventImageURL)!), placeholderImage: #imageLiteral(resourceName: "cannot load image"), options: [])
-            
-            //imageCell.eventImage.image = UIImage(named: "science_fair-0038-2014_0")
             
             return imageCell
         }
@@ -87,6 +80,8 @@ class EventDetailsTableViewController: UITableViewController {
             
             nameCell.nameLabel.text? = (self.event?.name)!
             
+            nameCell.venueLabel.text? = "by " + (self.event?.organizerName)!
+            
             return nameCell
             
         }
@@ -98,9 +93,29 @@ class EventDetailsTableViewController: UITableViewController {
         else if (indexPath.row == 3) {
             let locationCell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath as IndexPath) as! LocationTableViewCell
             
-            locationCell.dateLabel.text = "Some date"
-            locationCell.addressLabel.text = self.event?.address
+            let startTime = self.event?.startTime
+            let endTime = self.event?.endTime
             
+            
+            let startDate = (startTime?[0])!+(startTime?[1])!+(startTime?[2])!+(startTime?[3])!+(startTime?[4])!
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMMddEh:mma"
+            let unFormat = formatter.date(from: startDate)
+            
+            let printFormat = DateFormatter()
+            //Friday, February 24 at 12 PM -
+            printFormat.dateFormat = "EEEE, MMMM dd 'at' h:mma '-'"
+            let dateFormat = printFormat.string(from: unFormat!)
+            
+            
+            locationCell.dateLabel.text = dateFormat + " " + (endTime?[3])! + (endTime?[4])!
+
+            locationCell.dateLabel.adjustsFontSizeToFitWidth = true
+            locationCell.dateLabel.minimumScaleFactor = 0.2
+            
+            locationCell.addressLabel.text = self.event?.address
+            locationCell.addressLabel.adjustsFontSizeToFitWidth = true
+            locationCell.addressLabel.minimumScaleFactor = 0.2
             
             return locationCell
         }
@@ -112,11 +127,6 @@ class EventDetailsTableViewController: UITableViewController {
             
             return detailCell
         }
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        //return cell
     }
     
 

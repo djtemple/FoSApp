@@ -23,6 +23,7 @@ struct Events {
     
     var venueName:String
     var city:String
+    var organizerName:String
     
 }
 
@@ -161,6 +162,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             let displayAddress = add["localized_address_display"] as! String
             let areaDisplay = add["localized_area_display"] as! String
             let address = displayAddress + " " + areaDisplay
+            
             // coordinates
             let lat = add["latitude"] as! String
             let latitude = Double(lat)
@@ -171,8 +173,13 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             let logo = readableJSON?["logo"] as! [String:Any]
             let original = logo["original"] as! [String:Any]
             let imageURL = original["url"] as! String
+            
+            
+            // Get organizers name
+            let organizer = readableJSON?["organizer"] as! [String:Any]
+            let organizerName = organizer["name"] as! String
 
-            let evt:Events = Events(name: name, eventImageURL: imageURL, description: description, startTime: startArray, endTime: endArray, address: address, longitude: longitude!, latitude: latitude!, venueName: venueName, city: city)
+            let evt:Events = Events(name: name, eventImageURL: imageURL, description: description, startTime: startArray, endTime: endArray, address: address, longitude: longitude!, latitude: latitude!, venueName: venueName, city: city, organizerName:organizerName)
             
             //print(evt)
             self.eventsArray.append(evt)
@@ -274,9 +281,14 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
         
         cell.titleLabel.text? = evt.name
         
-        let detail = startTime[2] + " " + startTime[3] + startTime[4] + " - " + evt.venueName + " - " + evt.city
+        // this one includes the label for city 
+        //let detail = startTime[2] + " " + startTime[3] + startTime[4] + " - " + evt.venueName + " - " + evt.city
        
+        let detail = startTime[2] + " " + startTime[3] + startTime[4] + " - " + evt.venueName
+
         cell.detailLabel.text? = detail
+        cell.detailLabel.adjustsFontSizeToFitWidth = true
+        cell.detailLabel.minimumScaleFactor = 0.2
         
         return cell
      }
