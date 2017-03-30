@@ -10,9 +10,12 @@ import UIKit
 
 class ButtonTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var yesButton: UIButton!
-    @IBOutlet weak var noButton: UIButton!
-    @IBOutlet weak var interestedButton: UIButton!
+    @IBOutlet weak var rrsp: UIButton!
+    @IBOutlet weak var addToCalendar: UIButton!
+    
+    var url:String? = nil
+    
+    var delegate:UITableViewController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,6 +23,35 @@ class ButtonTableViewCell: UITableViewCell {
         
     }
 
+    @IBAction func rrspButton(_ sender: Any) {
+        //UIApplication.shared.openURL(NSURL(string: "http://www.google.com")! as URL)
+        
+        UIApplication.shared.open(URL(string: url!)!, options: [:], completionHandler: nil)
+
+    }
+
+    @IBAction func addToCalendar(_ sender: Any) {
+        let calendarAlert = UIAlertController(title: "Add To Calendar", message: "Add this event your calendar as a reminder", preferredStyle: UIAlertControllerStyle.alert)
+        
+        
+        let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
+            
+            
+            print("handle adding to calendar here")
+        }
+        
+         calendarAlert.addAction(OKAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (action:UIAlertAction) in
+            
+            print("Cancel logic here. Nothing happens")
+        }
+        
+        calendarAlert.addAction(cancelAction)
+       
+        delegate?.present(calendarAlert, animated: true, completion: nil)
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

@@ -18,11 +18,14 @@
 		8731789A1E4D99B600B54269 /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873178961E4D99B600B54269 /* TwitterKit.framework */; };
 		8731789B1E4D99B600B54269 /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 873178971E4D99B600B54269 /* TwitterKitResources.bundle */; };
 		8731789C1E4D99B600B54269 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 873178981E4D99B600B54269 /* TwitterCore.framework */; };
+		874830961E8C1502008C3D39 /* FilterHomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 874830951E8C1502008C3D39 /* FilterHomeTableViewController.swift */; };
 		876932EE1E3410AC005D46A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876932ED1E3410AC005D46A6 /* AppDelegate.swift */; };
 		876932F51E3410AD005D46A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 876932F41E3410AD005D46A6 /* Assets.xcassets */; };
 		876932F81E3410AD005D46A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 876932F61E3410AD005D46A6 /* LaunchScreen.storyboard */; };
 		876933031E3410AD005D46A6 /* fosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876933021E3410AD005D46A6 /* fosTests.swift */; };
 		8769330E1E3410AD005D46A6 /* fosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8769330D1E3410AD005D46A6 /* fosUITests.swift */; };
+		87AE16261E85A3D20096786D /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AE16251E85A3D20096786D /* EventDetailViewController.swift */; };
+		87AE16291E88D6F80096786D /* FilterEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AE16281E88D6F80096786D /* FilterEventsTableViewController.swift */; };
 		87BD94CD1E7E3D2100A65426 /* InstagramPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94CC1E7E3D2100A65426 /* InstagramPostTableViewCell.swift */; };
 		87BD94D21E7E3FF900A65426 /* InstagramTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94D11E7E3FF900A65426 /* InstagramTableViewController.swift */; };
 		87BD94D41E7E402100A65426 /* InstagramTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD94D31E7E402100A65426 /* InstagramTableViewCell.swift */; };
@@ -71,6 +74,7 @@
 		873178961E4D99B600B54269 /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
 		873178971E4D99B600B54269 /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TwitterKitResources.bundle; sourceTree = "<group>"; };
 		873178981E4D99B600B54269 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
+		874830951E8C1502008C3D39 /* FilterHomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterHomeTableViewController.swift; sourceTree = "<group>"; };
 		876932EA1E3410AC005D46A6 /* fos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		876932ED1E3410AC005D46A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		876932F41E3410AD005D46A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,6 +86,8 @@
 		876933091E3410AD005D46A6 /* fosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8769330D1E3410AD005D46A6 /* fosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fosUITests.swift; sourceTree = "<group>"; };
 		8769330F1E3410AD005D46A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		87AE16251E85A3D20096786D /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		87AE16281E88D6F80096786D /* FilterEventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterEventsTableViewController.swift; sourceTree = "<group>"; };
 		87BD94CC1E7E3D2100A65426 /* InstagramPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramPostTableViewCell.swift; sourceTree = "<group>"; };
 		87BD94CE1E7E3FC200A65426 /* fos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "fos-Bridging-Header.h"; sourceTree = "<group>"; };
 		87BD94D11E7E3FF900A65426 /* InstagramTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramTableViewController.swift; sourceTree = "<group>"; };
@@ -222,6 +228,7 @@
 				87BD94D11E7E3FF900A65426 /* InstagramTableViewController.swift */,
 				87BD94D31E7E402100A65426 /* InstagramTableViewCell.swift */,
 				87DC90341E522704007DC991 /* ScrollTableViewCell.swift */,
+				874830951E8C1502008C3D39 /* FilterHomeTableViewController.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -254,6 +261,8 @@
 				87E0FCA81E8246970079A99F /* ButtonTableViewCell.swift */,
 				87E0FCAA1E8246B30079A99F /* LocationTableViewCell.swift */,
 				87E0FCAC1E8246C30079A99F /* DetailTableViewCell.swift */,
+				87AE16251E85A3D20096786D /* EventDetailViewController.swift */,
+				87AE16281E88D6F80096786D /* FilterEventsTableViewController.swift */,
 			);
 			name = "Test Event";
 			sourceTree = "<group>";
@@ -576,13 +585,16 @@
 				87BD94D81E7E47A300A65426 /* ExploreTableViewController.swift in Sources */,
 				87E0FCAB1E8246B30079A99F /* LocationTableViewCell.swift in Sources */,
 				87E0FCA71E8246710079A99F /* NameTableViewCell.swift in Sources */,
+				87AE16291E88D6F80096786D /* FilterEventsTableViewController.swift in Sources */,
 				87BD94DC1E7E47DA00A65426 /* ResourceViewController.swift in Sources */,
 				873178931E4D8F3B00B54269 /* EventTableViewCell.swift in Sources */,
 				876932EE1E3410AC005D46A6 /* AppDelegate.swift in Sources */,
 				87BD94D21E7E3FF900A65426 /* InstagramTableViewController.swift in Sources */,
 				87BD94CD1E7E3D2100A65426 /* InstagramPostTableViewCell.swift in Sources */,
 				87DC90351E522704007DC991 /* ScrollTableViewCell.swift in Sources */,
+				874830961E8C1502008C3D39 /* FilterHomeTableViewController.swift in Sources */,
 				87E0FCA51E8246520079A99F /* ImageTableViewCell.swift in Sources */,
+				87AE16261E85A3D20096786D /* EventDetailViewController.swift in Sources */,
 				873178911E4D8D1700B54269 /* EventsViewController.swift in Sources */,
 				871114031E4074E400110735 /* HomeViewController.swift in Sources */,
 				87E0FCA91E8246970079A99F /* ButtonTableViewCell.swift in Sources */,

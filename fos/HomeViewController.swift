@@ -216,6 +216,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 cell.tweetView.showActionButtons = false
                 cell.configure(with: tweet)
                 
+                
+                
             }
             return cell
         }

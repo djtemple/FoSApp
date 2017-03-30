@@ -13,7 +13,6 @@ class EventDetailsTableViewController: UITableViewController {
     var event:Events?
 
     override func viewDidLoad() {
-        super.viewDidLoad()
 
         if event == nil {
             event?.address = "not working"
@@ -87,6 +86,9 @@ class EventDetailsTableViewController: UITableViewController {
         }
         else if (indexPath.row == 2) {
             let buttonCell = tableView.dequeueReusableCell(withIdentifier: "ButtonCell", for: indexPath as IndexPath) as! ButtonTableViewCell
+            
+            buttonCell.url = self.event?.url
+            buttonCell.delegate = self
             
             return buttonCell
         }

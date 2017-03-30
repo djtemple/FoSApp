@@ -25,6 +25,8 @@ struct Events {
     var city:String
     var organizerName:String
     
+    var url:String
+    
 }
 
 class EventsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -67,7 +69,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     
     // get the event ids from the user
     func getEventID() {
-        let url = "https://www.eventbriteapi.com/v3/users/me/owned_events/?token=EZ73BAWEGUIBY3JQWIT7"
+        let url = "https://www.eventbriteapi.com/v3/users/me/owned_events/?status=live&token=EZ73BAWEGUIBY3JQWIT7"
         
         Alamofire.request(url).responseJSON { (response) in
             self.parseEventID(JSONData: response.data!)
@@ -113,6 +115,10 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     func parseEvent(JSONData: Data) {
         do {
             let readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .allowFragments) as? NSDictionary
+            
+            
+            //url
+            let url = readableJSON?["url"] as! String
             
             //name
             let nameText = readableJSON?["name"] as! [String: Any]
@@ -179,7 +185,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             let organizer = readableJSON?["organizer"] as! [String:Any]
             let organizerName = organizer["name"] as! String
 
-            let evt:Events = Events(name: name, eventImageURL: imageURL, description: description, startTime: startArray, endTime: endArray, address: address, longitude: longitude!, latitude: latitude!, venueName: venueName, city: city, organizerName:organizerName)
+            let evt:Events = Events(name: name, eventImageURL: imageURL, description: description, startTime: startArray, endTime: endArray, address: address, longitude: longitude!, latitude: latitude!, venueName: venueName, city: city, organizerName:organizerName, url: url)
             
             //print(evt)
             self.eventsArray.append(evt)
@@ -307,6 +313,20 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             }
             
         }
+        /*
+        else if(segue.identifier == "ShowEventWeb") {
+            let eventView:EventDetailViewController = (segue.destination as? EventDetailViewController)!
+            
+            if let selectEvent = sender as? EventTableViewCell {
+                let index = self.tableView.indexPath(for: selectEvent)!
+                
+                let evt2  = self.eventsArray[index.row]
+                
+                eventView.weblink = evt2.url
+            }
+            
+        }
+        */
         
     }
 
