@@ -25,22 +25,33 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var imageArray = [UIImage]()
     // Hold all the loaded Tweets
     var tweets: [TWTRTweet] = []
     var instagram:[instagramPost] = []
+    
+    var postArray:[Any] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // hides the nav bar when scrolling
         //navigationController?.hidesBarsOnSwipe = true
+        self.tableView.estimatedRowHeight = 400
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        self.tableView.tableFooterView = UIView()
         
         self.tableView.alwaysBounceVertical = false
-
+        
+        
+        if postArray.count == 0 {
+            activityIndicator.startAnimating()
+        }
         
         self.getInstagramPost()
-        
-        self.getTweets()
+        self.tableView.reloadData()
     }
     
     func getInstagramPost() {
@@ -51,16 +62,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //let url = "https://www.instagram.com/ucwearescience/media/"
         Alamofire.request(url).responseJSON { (response) in
-            self.parseData(JSONData: response.data!)
+            self.parseData(JSONData: response.data!) { () -> () in
+                print("Done Instagram")}
+            
+            self.getTweets()
+            //self.sortArray()
         }
     }
     
-    func parseData(JSONData: Data) {
+    func parseData(JSONData: Data, completion: () -> ()) {
         do {
             let readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .allowFragments) as? NSDictionary
             // readableJSON contains the instagram post
             
-            // prints the readable JSON to parse
             // here is a link if you want to see the JSON response as well:
             //https://apigee.com/console/instagram?req=%7B%22resource%22%3A%22%22%2C%22params%22%3A%7B%22query%22%3A%7B%7D%2C%22template%22%3A%7B%7D%2C%22headers%22%3A%7B%7D%2C%22body%22%3A%7B%22attachmentFormat%22%3A%22mime%22%2C%22attachmentContentDisposition%22%3A%22form-data%22%7D%7D%2C%22verb%22%3A%22get%22%7D
             //print(readableJSON ?? "no object")
@@ -68,7 +82,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             let datas = readableJSON?["data"] as? [[String:Any]]
             
             for data in datas! {
-                //print(data)
                 // checks if captions is not empty
                 // cpations in JSON contain the text from the post, username, profile_picture, and created_time
                 
@@ -84,16 +97,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     //print(text ?? "text nil")
                     
                     let createdTime = (caption["created_time"] as? String)!
-                    //print(timeStamp ?? "no created_time")
+                    //print(createdTime ?? "no created_time")
                     
                     let date = NSDate(timeIntervalSince1970: Double(createdTime)!)
                     let dateFormatter = DateFormatter()
-                    //dateFormatter.timeStyle = DateFormatter.Style.medium
-                    //dateFormatter.dateStyle = DateFormatter.Style.short
-                    dateFormatter.dateFormat = "E MMM DD HH:mm y"
+                    dateFormatter.dateFormat = "yyyy-MM-d HH:mm:ssZ"
                     timeStamp = dateFormatter.string(from: date as Date)
-                    
-                    //print(timeStamp)
                     
                     // check to see if from is not empty
                     if let from = caption["from"] as? [String: Any] {
@@ -112,24 +121,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                 }
                 
-                //let post:instagramPost = instagramPost(text: text, profileImageURL: profileURL, userName: username, timeStamp: timeStamp, profileImage:#imageLiteral(resourceName: "instagramProfile"), postImage: #imageLiteral(resourceName: "cannot load image"))
                 let post:instagramPost = instagramPost(text: text, profileImageURL: profileURL, postImageURL: postURL, userName: username, timeStamp: timeStamp)
                 
-                
                 self.instagram.append(post)
-                
-                
-                
-                
             }
-            //print(self.instagram)
-            
         }
         catch {
             print(error)
         }
+        completion()
     }
     
+    /*
+     * gets the tweets from the keys
+     * after getting the tweets in a json array. It uses TWTRTweets from Fabric to convert the json into a TWTRTweet array
+     */
     func getTweets() {
         let twitter = STTwitterAPI(oAuthConsumerKey: "vGdyaBeBYWka2JwDQvHSLviCL", consumerSecret: "OTcbCMM9oW9D3wXVDp6gTpwkzRQzDBfDgm9AXfipLjH3pq0C0t", oauthToken: "826142454613020672-cRBbVSOOPhNBstNnPDin6NJl3swd8Wp", oauthTokenSecret: "yWmRoRJBb9oPx00od1FpUCzfS6XC48uxUJa9si85d2ryo")
         
@@ -142,111 +148,194 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             print(error ?? "Error verifing")
             
         }
-        
-        twitter?.getHomeTimeline(sinceID: nil, count: 40, successBlock: { (statuses) in
+        twitter?.getHomeTimeline(sinceID: nil, count: 800, successBlock: { (statuses) in
             //print(statuses!)
             
             self.tweets = TWTRTweet.tweets(withJSONArray: statuses!) as! [TWTRTweet]
             
-            //print(self.tweets)
-            
-            self.tableView.reloadData()
+            self.sortArray()
             
         }) { (error) in
             print(error ?? "Error fetching data")
         }
         
-        
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Plus one for the header cell
-        //return self.tweets.count + 1
-        
-        
-        return self.tweets.count + self.instagram.count + 1
-    }
+    /* Sorts the instagram post and twitter post into one timeline.
+     * Organizes the post from dates (newest to oldest)
+     */
     
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func sortArray() {
         
-        if(indexPath.row == 0) {
-            let scrollCell = tableView.dequeueReusableCell(withIdentifier: "ScrollCell", for: indexPath as IndexPath) as! ScrollTableViewCell
-            return scrollCell
-        }
-            
-        else if (indexPath.row < (self.instagram.count + 1)) {
-            let instaCell = tableView.dequeueReusableCell(withIdentifier: "InstagramCell", for: indexPath as IndexPath) as! InstagramPostTableViewCell
-            instaCell.selectionStyle = UITableViewCellSelectionStyle.none
-            
-            
-            // need some error checking to make sure instagram is not empty array
-            
-            if self.instagram.count > 0 {
-                let post = self.instagram[indexPath.row - 1]
-                
-                instaCell.userNameLabel.text = post.userName
-                
-                
-                instaCell.profileImage.sd_setImage(with: URL(string: post.profileImageURL))
-                instaCell.postImage.sd_setImage(with: URL(string: post.postImageURL), placeholderImage: #imageLiteral(resourceName: "cannot load image"), options: [])
-                
-                // need to fill text from the post. Also need the cell to auto adjust height
-                
-                instaCell.postTextLabel.text? = post.text
-                //instaCell.postTextLabel.numberOfLines = 6
-                instaCell.postTextLabel.adjustsFontSizeToFitWidth = false
-                instaCell.postTextLabel.lineBreakMode = .byTruncatingTail
-                
-            }
-            
-            
-            return instaCell
-        }
-            
-        else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath as IndexPath) as! TWTRTweetTableViewCell
-            
-            let index = indexPath.row - (1+self.instagram.count)
-            
-            if(index < self.tweets.count && (index > 0)) {
-                let tweet = tweets[index]
-                cell.tweetView.delegate = self
-                cell.tweetView.showActionButtons = false
-                cell.configure(with: tweet)
-                
-                
-                
-            }
-            return cell
-        }
+        let limit = self.instagram.count + self.tweets.count
+        var instagramIndex = 0
+        var tweetIndex = 0
         
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        // height for header
-        if(indexPath.row == 0){
-            return 120
-        }
+        for _ in 0..<limit {
+            // get both of the post
+            let instaPost = self.instagram[instagramIndex]
+            let twt = self.tweets[tweetIndex]
             
-            // height for instagram cells
-        else if (indexPath.row < (self.instagram.count + 1)) {
-            return 475
-        }
+            // format the date formatter
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-d HH:mm:ssZ"
             
-            // height for twitter cells
-        else {
-            let index = indexPath.row - (1+self.instagram.count)
+            let instagramDate = dateFormatter.date(from: instaPost.timeStamp)
+            let twtDate = twt.createdAt
             
-            if(index < self.tweets.count && (index > 0)) {
-                let tweet = tweets[index]
-                return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width: self.view.bounds.width, showingActions: false)
+            // compare the instagram date and the twitter date
+            if instagramDate! < twtDate {
+                // twitter before instagram
+                if(postArray.count + 1 < limit) {
+                    postArray.append(twt)
+                }
+                // increment the twitter index
+                if(tweetIndex + 1 < self.tweets.count) {
+                    tweetIndex += 1
+                }
+                else {
+                    
+                    if(tweetIndex == self.tweets.count - 1) {
+                        
+                        //check if the element exist in the array before appending
+                        if(postArray.count <= limit) {
+                            postArray.append(instaPost)
+                            //print("------ Instagram post appended")
+                            //print(instaPost)
+                        }
+                        
+                        if(instagramIndex + 1 < self.instagram.count) {
+                            instagramIndex += 1
+                        }
+                        
+                    }
+                }
+                
             }
             else {
-                return 0
+                // instagram before twitter post
+                
+                // Add to the array
+                if(postArray.count < limit) {
+                    postArray.append(instaPost)
+                }
+                // check if the index will be over the instagram count
+                // checks for index out of bounds
+                if(instagramIndex + 1 < self.instagram.count) {
+                    instagramIndex += 1
+                }
+                
             }
+            
+        }
+        // after processing the postArray. Reload the table view data
+        self.tableView.reloadData()
+        
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+    }
+    
+    //return the number of cells from the postArray count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return self.postArray.count + 1
+        
+    }
+    
+    // configures the tableview cell from the post
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ScrollCell", for: indexPath) as! ScrollTableViewCell
+            return  cell
+        }
+        else {
+            // check of the index path is with the postArray length
+            // indexPath.row < self.postArray.count
+            
+            if (indexPath.row >= 1) {
+                
+                // get the post from the array
+                let post = self.postArray[indexPath.row - 1]
+                
+                // check if it is an instagram post
+                if post is instagramPost {
+                    
+                    // return a instagram cell from the instagram post
+                    let instaPost = post as! instagramPost
+                    
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "InstagramCell", for: indexPath as IndexPath) as! InstagramPostTableViewCell
+                    cell.selectionStyle = UITableViewCellSelectionStyle.none
+                    cell.userNameLabel.text = instaPost.userName
+                    
+                    //cell.profileImage.sd_setImage(with: URL(string: instaPost.profileImageURL))
+                    cell.profileImage.sd_setImage(with: URL(string: instaPost.profileImageURL), placeholderImage: #imageLiteral(resourceName: "instagramProfileImage"), options: [])
+                    cell.postImage.sd_setImage(with: URL(string: instaPost.postImageURL), placeholderImage: #imageLiteral(resourceName: "cannot load image"), options: [])
+                    
+                    cell.postTextLabel.text? = instaPost.text
+                    //cell.postTextLabel.numberOfLines = 6
+                    cell.postTextLabel.adjustsFontSizeToFitWidth = false
+                    cell.postTextLabel.lineBreakMode = .byTruncatingTail
+                    
+                    return cell
+                }
+                else {
+                    
+                    // configure twitter cell and return twitter cell
+                    let twt:TWTRTweet = post as! TWTRTweet
+                    
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath as IndexPath) as! TWTRTweetTableViewCell
+                    
+                    cell.tweetView.delegate = self
+                    cell.tweetView.showActionButtons = false
+                    cell.configure(with: twt)
+                    
+                    return cell
+                }
+                
+            }
+            else {
+                // return an empty in case...
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath as IndexPath) as! TWTRTweetTableViewCell
+                return cell
+            }
+            
+            
+        }
+        
+        
+    }
+    
+    
+    // return the height of the cells using auto layout
+    /*
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+        
+    }
+    */
+    
+    // return the height of a cell
+    // checks if it is a twitter post. If it is a twitter post then it returns the height of the twitter cell
+    // else, it just returns the height of the cell from auto layout
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if indexPath.row >= 1 {
+            let index = indexPath.row - 1
+            
+            let post = self.postArray[index]
+                if post is TWTRTweet {
+                    let tweet = post as! TWTRTweet
+                    
+                    return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width: self.view.bounds.width, showingActions: false)
+                }
+                else {
+                    return UITableViewAutomaticDimension
+                }
+        }
+        else {
+            return UITableViewAutomaticDimension
         }
         
     }
@@ -269,16 +358,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if(segue.identifier == "ShowInstagram") {
             
             let view:InstagramTableViewController = (segue.destination as? InstagramTableViewController)!
-    
+            
             if let selectedPost = sender as? InstagramPostTableViewCell {
                 let indexPath = tableView.indexPath(for: selectedPost)!
-                let expandedPost = self.instagram[indexPath.row - 1]
+                
+                // - 1 after putting back the banner
+                let expandedPost:instagramPost = self.postArray[indexPath.row] as! instagramPost
                 view.post = expandedPost
                 
             }
             
         }
- 
+        
     }
     
     
