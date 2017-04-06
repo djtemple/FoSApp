@@ -26,18 +26,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    var imageArray = [UIImage]()
+    
     // Hold all the loaded Tweets
+    
+    var imageArray = [UIImage]()
+
     var tweets: [TWTRTweet] = []
     var instagram:[instagramPost] = []
     
     var postArray:[Any] = []
+    
+    var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // hides the nav bar when scrolling
         //navigationController?.hidesBarsOnSwipe = true
+        
         self.tableView.estimatedRowHeight = 400
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -45,13 +51,72 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.tableView.alwaysBounceVertical = false
         
+        self.tableView.scrollsToTop = true
         
-        if postArray.count == 0 {
-            activityIndicator.startAnimating()
+        
+        //self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl.addTarget(self, action: #selector(HomeViewController.refresh(sender:)), for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
+        
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.isHidden = false
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            
+            self.getInstagramPost()
+            
+            // Bounce back to the main thread to update the UI
+            DispatchQueue.main.async {
+                
+            }
+        }
+    }
+    
+    
+    func didLoad() {
+        let defaults = UserDefaults.standard
+        
+        if self.refreshControl.isRefreshing {
+            self.refreshControl.endRefreshing()
         }
         
-        self.getInstagramPost()
+        if defaults.bool(forKey: "All") {
+            //self.postArray = self.instagram
+            self.sortArray()
+        }
+            
+        else if defaults.bool(forKey: "Instagram") {
+            self.postArray = self.instagram
+        }
+        else if defaults.bool(forKey: "Twitter") {
+            self.postArray = self.tweets
+            //self.postArray = self.instagram
+        }
+        // this is causing the problem. This method is called more than once.
+        
+        if self.activityIndicator.isAnimating {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+        }
+        
         self.tableView.reloadData()
+        self.scrollToFirstRow()
+    }
+    
+    func refresh(sender: AnyObject) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.getInstagramPost()
+            // Bounce back to the main thread to update the UI
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    // Scroll the tableview back to display the first table cell
+    func scrollToFirstRow() {
+        let indexPath = NSIndexPath(row: 0, section: 0)
+        self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: true)
     }
     
     func getInstagramPost() {
@@ -59,6 +124,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // not sure if the access token will expire and ask for a new one.
         // access token tutorial from here: http://jelled.com/instagram/access-token
         let url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=4705337461.36b725b.9adf55032d094167a3984ce6b0c3a315"
+        
+        print("In getInstagramPost")
         
         //let url = "https://www.instagram.com/ucwearescience/media/"
         Alamofire.request(url).responseJSON { (response) in
@@ -68,9 +135,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.getTweets()
             //self.sortArray()
         }
+        
     }
     
     func parseData(JSONData: Data, completion: () -> ()) {
+        //print("In parseData")
         do {
             let readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .allowFragments) as? NSDictionary
             // readableJSON contains the instagram post
@@ -137,6 +206,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      * after getting the tweets in a json array. It uses TWTRTweets from Fabric to convert the json into a TWTRTweet array
      */
     func getTweets() {
+        //print("In getTweets")
         let twitter = STTwitterAPI(oAuthConsumerKey: "vGdyaBeBYWka2JwDQvHSLviCL", consumerSecret: "OTcbCMM9oW9D3wXVDp6gTpwkzRQzDBfDgm9AXfipLjH3pq0C0t", oauthToken: "826142454613020672-cRBbVSOOPhNBstNnPDin6NJl3swd8Wp", oauthTokenSecret: "yWmRoRJBb9oPx00od1FpUCzfS6XC48uxUJa9si85d2ryo")
         
         twitter?.verifyCredentials(userSuccessBlock: { (username, userID) in
@@ -152,8 +222,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             //print(statuses!)
             
             self.tweets = TWTRTweet.tweets(withJSONArray: statuses!) as! [TWTRTweet]
-            
-            self.sortArray()
+            self.didLoad()
             
         }) { (error) in
             print(error ?? "Error fetching data")
@@ -166,8 +235,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      */
     
     func sortArray() {
-        
         let limit = self.instagram.count + self.tweets.count
+        
+        if self.postArray.count == limit {
+            return
+        }
+        else {
+            self.postArray = []
+        }
+        
         var instagramIndex = 0
         var tweetIndex = 0
         
@@ -194,14 +270,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     tweetIndex += 1
                 }
                 else {
-                    
                     if(tweetIndex == self.tweets.count - 1) {
                         
                         //check if the element exist in the array before appending
                         if(postArray.count <= limit) {
                             postArray.append(instaPost)
-                            //print("------ Instagram post appended")
-                            //print(instaPost)
                         }
                         
                         if(instagramIndex + 1 < self.instagram.count) {
@@ -231,8 +304,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // after processing the postArray. Reload the table view data
         self.tableView.reloadData()
         
-        activityIndicator.stopAnimating()
-        activityIndicator.isHidden = true
     }
     
     //return the number of cells from the postArray count
@@ -252,7 +323,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         else {
             // check of the index path is with the postArray length
-            // indexPath.row < self.postArray.count
             
             if (indexPath.row >= 1) {
                 
@@ -307,36 +377,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    
     // return the height of the cells using auto layout
-    /*
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
-        
-    }
-    */
-    
-    // return the height of a cell
-    // checks if it is a twitter post. If it is a twitter post then it returns the height of the twitter cell
-    // else, it just returns the height of the cell from auto layout
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        if indexPath.row >= 1 {
-            let index = indexPath.row - 1
-            
-            let post = self.postArray[index]
-                if post is TWTRTweet {
-                    let tweet = post as! TWTRTweet
-                    
-                    return TWTRTweetTableViewCell.height(for: tweet, style: .compact, width: self.view.bounds.width, showingActions: false)
-                }
-                else {
-                    return UITableViewAutomaticDimension
-                }
-        }
-        else {
-            return UITableViewAutomaticDimension
-        }
         
     }
     
@@ -363,7 +406,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let indexPath = tableView.indexPath(for: selectedPost)!
                 
                 // - 1 after putting back the banner
-                let expandedPost:instagramPost = self.postArray[indexPath.row] as! instagramPost
+                let expandedPost:instagramPost = self.postArray[indexPath.row-1] as! instagramPost
                 view.post = expandedPost
                 
             }
@@ -372,5 +415,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    @IBAction func unwindToHome(_ sender: UIStoryboardSegue) {
+        
+        self.didLoad()
+        
+    }
+
     
 }

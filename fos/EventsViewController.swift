@@ -35,6 +35,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var eventID:[String] = []
     var eventsArray:[Events] = []
     
@@ -44,6 +45,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //activityIndicator.startAnimating()
         
         let span:MKCoordinateSpan = MKCoordinateSpanMake(0.007, 0.007)
         let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(51.077723, -114.130994)
@@ -64,6 +66,8 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
         
         self.getEventID()
         
+        //activityIndicator.stopAnimating()
+        //activityIndicator.isHidden = true
         
     }
     
@@ -244,6 +248,9 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             annotation.title = evt.name
             self.mapView.addAnnotation(annotation)
         }
+        
+        //self.activityIndicator.stopAnimating()
+        //self.activityIndicator.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

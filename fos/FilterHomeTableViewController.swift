@@ -10,6 +10,8 @@ import UIKit
 
 class FilterHomeTableViewController: UITableViewController {
 
+    let nameLabel = ["All", "Instagram", "Twitter"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,49 +32,82 @@ class FilterHomeTableViewController: UITableViewController {
         }
     }
 
+    @IBAction func doneButton(_ sender: Any) {
+        
+        self.saveSelection()
+        self.performSegue(withIdentifier: "unwindToHome", sender: self)
+        
+        let isPresentingInFilter = presentingViewController is UITabBarController
+        
+        if isPresentingInFilter {
+            dismiss(animated: true, completion: nil)
+        } else {
+            navigationController!.popViewController(animated: true)
+        }
+    }
+    func saveSelection() {
+        for i in 0..<self.nameLabel.count {
+            let indexPath = NSIndexPath(item: i, section: 0)
+            let cell = tableView.cellForRow(at: indexPath as IndexPath)
+            
+            let defaults = UserDefaults.standard
+            
+            if cell?.accessoryType == UITableViewCellAccessoryType.checkmark {
+                defaults.set(true, forKey: self.nameLabel[i])
+            }
+            else {
+                defaults.set(false, forKey: self.nameLabel[i])
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.cellForRow(at: indexPath)?.setSelected(false, animated: true)
         
+        for i in 0..<self.nameLabel.count {
+            let otherIndex = NSIndexPath(row: i, section: 0)
+            
+            // row that has been selected stays checkmarked
+            if otherIndex.row == indexPath.row {
+                tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
+            else {
+                tableView.cellForRow(at: otherIndex as IndexPath)?.accessoryType = UITableViewCellAccessoryType.none
+            }
+        }
         
-        if tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType == UITableViewCellAccessoryType.checkmark {
-            tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = UITableViewCellAccessoryType.none
-        }
-        else {
-            tableView.cellForRow(at: indexPath as IndexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
-        }
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return self.nameLabel.count
     }
-
-    /*
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FilterTableViewCell
+        
+        cell.nameLabel.text? = self.nameLabel[indexPath.row]
+        
+        let defaults = UserDefaults.standard
+        
+        if defaults.bool(forKey: self.nameLabel[indexPath.row]) {
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryType.none
+        }
+        
+        
+        cell.tag = indexPath.row
         return cell
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
