@@ -316,7 +316,6 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
                 
                 let evt = self.eventsArray[indexPath.row]
                 view.event = evt
-                
             }
             
         }

@@ -13,21 +13,6 @@ class EventDetailsTableViewController: UITableViewController {
     var event:Events?
 
     override func viewDidLoad() {
-
-        if event == nil {
-            event?.address = "not working"
-            event?.city = "not working"
-            event?.description = "not working"
-            event?.endTime = ["not working","not working","not working","not working"]
-            event?.startTime = ["not working","not working","not working","not working"]
-            event?.name = "not working"
-            event?.eventImageURL = ""
-            event?.venueName = "not working"
-            
-            event?.latitude = 0.0
-            event?.longitude = 0.0
-            
-        }
         
         //print(event)
 
@@ -89,6 +74,7 @@ class EventDetailsTableViewController: UITableViewController {
             
             buttonCell.url = self.event?.url
             buttonCell.delegate = self
+            buttonCell.selectedEvent = self.event
             
             return buttonCell
         }
