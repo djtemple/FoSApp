@@ -27,48 +27,76 @@ struct Events {
     
     var url:String
     
+    var startDate:Date
+    var endDate:Date
+    
 }
 
-class EventsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class EventsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarControllerDelegate {
 
-    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    
+    
+    
     var eventID:[String] = []
     var eventsArray:[Events] = []
     
-    var eventsToday:[Events] = []
-    //var eventCoordinates:[CLLocationCoordinate2D] = []
+    var refreshControl = UIRefreshControl()
+    //let searchBar = UISearchBar()
+    
+    var isVisible:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // set the delegate of the tab bar
+        self.tabBarController?.delegate = self
 
-        //activityIndicator.startAnimating()
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.isHidden = false
         
-        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.007, 0.007)
-        let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(51.077723, -114.130994)
+        self.imageView.image = UIImage(named: "slide 1")
         
-        let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
-        
-        mapView.setRegion(region, animated: true)
-        
-        
-        let annotation = MKPointAnnotation()
-        let aLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(51.080031, -114.126975)
-        annotation.coordinate = aLocation
-        annotation.title = "Collaborative Space"
-        self.mapView.addAnnotation(annotation)
- 
-        //tableView.rowHeight = UITableViewAutomaticDimension
-        //tableView.estimatedRowHeight = 80
-        
+        self.refreshControl.addTarget(self, action: #selector(EventsViewController.refresh(sender:)), for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
+
         self.getEventID()
         
-        //activityIndicator.stopAnimating()
-        //activityIndicator.isHidden = true
+        //self.createSearchBar()
         
+    }
+    
+   
+    @IBAction func searchBarItem(_ sender: Any) {
+        
+       
+    }
+    
+    // scroll tableview to the top when the home tab bar is selected
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
+        if tabBarController.selectedIndex == 2 {
+            print("------ home is 2")
+            self.scrollToFirstRow()
+        }
+        
+        
+    }
+    
+    func refresh(sender: AnyObject) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.eventID = []
+            self.eventsArray = []
+            self.getEventID()
+            // Bounce back to the main thread to update the UI
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     // get the event ids from the user
@@ -137,7 +165,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
             
             let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = "MMM dd E h:mm a"
+            dateFormatterPrint.dateFormat = "MMM d E h:mm a"
             
             // start time
             let st = readableJSON?["start"] as! [String:Any]
@@ -145,20 +173,19 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             
             //print(startTime)
             
-            var tempOut = dateFormatter.date(from: startTime)
-            let startDate = dateFormatterPrint.string(from: tempOut!)
-            let startArray = startDate.components(separatedBy: " ")
+            let startDate = dateFormatter.date(from: startTime)
+            var tempOut = dateFormatterPrint.string(from: startDate!)
+            let startArray = tempOut.components(separatedBy: " ")
             //print(startArray)
             
             // end time
             let end = readableJSON?["end"] as! [String:Any]
             let endTime = end["local"] as! String
             
-            tempOut = dateFormatter.date(from: endTime)
-            let endDate = dateFormatterPrint.string(from: tempOut!)
-            let endArray = endDate.components(separatedBy: " ")
+            let endDate = dateFormatter.date(from: endTime)
+            tempOut = dateFormatterPrint.string(from: endDate!)
+            let endArray = tempOut.components(separatedBy: " ")
             
-            //print(endArray)
             
             // venue then address
             let venue = readableJSON?["venue"] as! [String:Any]
@@ -189,7 +216,7 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             let organizer = readableJSON?["organizer"] as! [String:Any]
             let organizerName = organizer["name"] as! String
 
-            let evt:Events = Events(name: name, eventImageURL: imageURL, description: description, startTime: startArray, endTime: endArray, address: address, longitude: longitude!, latitude: latitude!, venueName: venueName, city: city, organizerName:organizerName, url: url)
+            let evt:Events = Events(name: name, eventImageURL: imageURL, description: description, startTime: startArray, endTime: endArray, address: address, longitude: longitude!, latitude: latitude!, venueName: venueName, city: city, organizerName:organizerName, url: url, startDate:startDate!, endDate: endDate!)
             
             //print(evt)
             self.eventsArray.append(evt)
@@ -201,57 +228,23 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
 
         self.tableView.reloadData()
         
-        self.getEventsToday()
-    }
-    
-    
-    // get the coordinates and add them to array
-    func getEventsToday() {
-        // filter events to events today.
-        // add them to the annotation array
-        
-        
-        for i in 0..<self.eventsArray.count {
-            let evt = self.eventsArray[i]
-            let dateArray = evt.startTime
-            
-            let month = dateArray[0]
-            let day = dateArray[1]
-            
-            let date = Date()
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MMM dd"
-            
-            let today = formatter.string(from: date)
-            
-            let evtDate = month + " " + day
-            if(evtDate == today) {
-                //print("same date")
-                self.eventsToday.append(evt)
-            }
-            
+        if self.activityIndicator.isAnimating {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
         }
-        
-        self.addEventAnnotations()
+       
+        if self.refreshControl.isRefreshing {
+            self.refreshControl.endRefreshing()
+        }
+        self.scrollToFirstRow()
         
     }
     
-    // Add annotations to the map
-    func addEventAnnotations(){
-        for i in 0..<self.eventsToday.count {
-            
-            let evt = self.eventsToday[i]
-            
-            let annotation = MKPointAnnotation()
-            let aLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(evt.latitude, evt.longitude)
-            annotation.coordinate = aLocation
-            annotation.title = evt.name
-            self.mapView.addAnnotation(annotation)
-        }
-        
-        //self.activityIndicator.stopAnimating()
-        //self.activityIndicator.isHidden = true
+    func scrollToFirstRow() {
+        let indexPath = NSIndexPath(row: 0, section: 0)
+        self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: true)
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         if let index = self.tableView.indexPathForSelectedRow{
@@ -275,11 +268,9 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
         // #warning Incomplete implementation, return the number of rows
         
         return eventsArray.count
-        //return 1
     }
     
-    
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
         // Configure the cell...
         
@@ -293,9 +284,6 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
         cell.dateLabel.text? = startTime[1]
         
         cell.titleLabel.text? = evt.name
-        
-        // this one includes the label for city 
-        //let detail = startTime[2] + " " + startTime[3] + startTime[4] + " - " + evt.venueName + " - " + evt.city
        
         let detail = startTime[2] + " " + startTime[3] + startTime[4] + " - " + evt.venueName
 
@@ -319,20 +307,6 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
             }
             
         }
-        /*
-        else if(segue.identifier == "ShowEventWeb") {
-            let eventView:EventDetailViewController = (segue.destination as? EventDetailViewController)!
-            
-            if let selectEvent = sender as? EventTableViewCell {
-                let index = self.tableView.indexPath(for: selectEvent)!
-                
-                let evt2  = self.eventsArray[index.row]
-                
-                eventView.weblink = evt2.url
-            }
-            
-        }
-        */
         
     }
 

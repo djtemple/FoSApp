@@ -17,11 +17,12 @@ class InstagramPostTableViewCell: UITableViewCell {
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var postTextLabel: UILabel!
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        instagramLogoImage.image = UIImage(named: "instagramLogo")
+        instagramLogoImage.image = UIImage(named: "Instagram_2016_icon copy")
         profileImage.layer.cornerRadius = profileImage.frame.size.width/2
         profileImage.clipsToBounds = true
     }

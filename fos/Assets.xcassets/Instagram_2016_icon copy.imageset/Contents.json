@@ -2,17 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "explore copy.png",
+      "filename" : "Instagram_2016_icon copy.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "explore copy-1.png",
+      "filename" : "instagram_2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "explore copy-2.png",
       "scale" : "3x"
     }
   ],

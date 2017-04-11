@@ -27,6 +27,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.shared.statusBarStyle =   UIStatusBarStyle.lightContent
         
+        // Set the checkmarks for the home filter
+        let defaults = UserDefaults.standard
+        
+        if (defaults.object(forKey: "All") == nil) {
+            defaults.set(true, forKey: "All")
+        }
+        else if defaults.object(forKey: "Instagram") == nil {
+            defaults.set(false, forKey: "Instagram")
+        }
+        else if defaults.object(forKey: "Twitter") == nil {
+            defaults.set(false, forKey: "Twitter")
+        }
+
+        
         return SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     

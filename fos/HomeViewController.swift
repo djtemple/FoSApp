@@ -21,7 +21,7 @@ struct instagramPost {
 }
 
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,TWTRTweetViewDelegate {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,TWTRTweetViewDelegate, UITabBarControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -43,6 +43,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // hides the nav bar when scrolling
         //navigationController?.hidesBarsOnSwipe = true
+        
+        // set the delegate of the tab bar
+        self.tabBarController?.delegate = self
+        
+        self.tableView.tableHeaderView = nil
         
         self.tableView.estimatedRowHeight = 400
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -70,6 +75,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
             }
         }
+    }
+    // scroll tableview to the top when the home tab bar is selected
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
+        if tabBarController.selectedIndex == 0 {
+            //print("------ home is 0")
+            self.scrollToFirstRow()
+        }
+        
+        
     }
     
     
@@ -379,7 +394,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // return the height of the cells using auto layout
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        
+        
+        if indexPath.row == 0 {
+            return 140
+        }
+        else {
+            return UITableViewAutomaticDimension
+        }
+ 
+        //return UITableViewAutomaticDimension
+        
         
     }
     

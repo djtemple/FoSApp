@@ -93,21 +93,51 @@ class FilterHomeTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FilterTableViewCell
+       
         
-        cell.nameLabel.text? = self.nameLabel[indexPath.row]
         
-        let defaults = UserDefaults.standard
-        
-        if defaults.bool(forKey: self.nameLabel[indexPath.row]) {
-            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AllCell", for: indexPath) 
+            cell.textLabel?.text = self.nameLabel[indexPath.row]
+            
+            let defaults = UserDefaults.standard
+            
+            if defaults.bool(forKey: self.nameLabel[indexPath.row]) {
+                cell.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
+            else {
+                cell.accessoryType = UITableViewCellAccessoryType.none
+            }
+            
+            cell.tag = indexPath.row
+            return cell
+            
         }
         else {
-            cell.accessoryType = UITableViewCellAccessoryType.none
+             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FilterTableViewCell
+        
+            cell.nameLabel.text? = self.nameLabel[indexPath.row]
+        
+            let defaults = UserDefaults.standard
+        
+            if defaults.bool(forKey: self.nameLabel[indexPath.row]) {
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
+            else {
+                cell.accessoryType = UITableViewCellAccessoryType.none
+            }
+        
+            if indexPath.row == 1 {
+                cell.logoImage.image = UIImage(named: "Instagram_2016_icon copy")
+            }
+            else if indexPath.row == 2 {
+                cell.logoImage.image = UIImage(named: "twitterIcon")
+            }
+        
+        
+            cell.tag = indexPath.row
+            return cell
         }
         
-        
-        cell.tag = indexPath.row
-        return cell
     }
 }

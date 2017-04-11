@@ -35,10 +35,7 @@ class ButtonTableViewCell: UITableViewCell {
 
     @IBAction func addToCalendar(_ sender: Any) {
         
-        
-        
         let calendarAlert = UIAlertController(title: "Add To Calendar", message: "Add this event to your calendar as a reminder", preferredStyle: UIAlertControllerStyle.alert)
-        
         
         let OKAction = UIAlertAction(title: "Ok", style: .default) { (action:UIAlertAction) in
             
@@ -55,19 +52,19 @@ class ButtonTableViewCell: UITableViewCell {
             formatter.dateStyle = .medium
             formatter.timeStyle = .medium
             
-            let dateStr = formatter.string(from: date)
-            print("1. \(dateStr)")
+            //let dateStr = formatter.string(from: date)
+            //print("1. \(dateStr)")
             
             var calendar = Calendar(identifier: .gregorian)
             calendar.locale = myLocale
             
             let dateComponents = calendar.dateComponents([.day, .month, .year], from: date)
-            let monthName = calendar.monthSymbols[dateComponents.month! - 1]
-            print ("2. \(dateComponents.day!) \(monthName) \(dateComponents.year!)")
+            //let monthName = calendar.monthSymbols[dateComponents.month! - 1]
+            //print ("2. \(dateComponents.day!) \(monthName) \(dateComponents.year!)")
             
             if let componentsBasedDate = calendar.date(from: dateComponents) {
-                let componentsBasedDateStr = formatter.string(from: componentsBasedDate)
-                print("3. \(componentsBasedDateStr)")
+                _ = formatter.string(from: componentsBasedDate)
+                //print("3. \(componentsBasedDateStr)")
             }
             
             // 'EKEntityTypeReminder' or 'EKEntityTypeEvent'
@@ -75,29 +72,43 @@ class ButtonTableViewCell: UITableViewCell {
             eventStore.requestAccess(to: .event) { (granted, error) in
                 
                 if (granted) && (error == nil) {
-                    print("granted \(granted)")
-                    print("error \(String(describing: error))")
+                    //print("granted \(granted)")
+                    //print("error \(String(describing: error))")
                     
                     let event:EKEvent = EKEvent(eventStore: eventStore)
                     
                     event.title = (self.selectedEvent?.name)!
-                    event.startDate = Date()
-                    event.endDate = Date()
+                    event.startDate = (self.selectedEvent?.startDate)!
+                    event.endDate = (self.selectedEvent?.endDate)!
                     event.notes = self.selectedEvent?.description
                     event.calendar = eventStore.defaultCalendarForNewEvents
+                    
+                    let predicate = eventStore.predicateForEvents(withStart: (self.selectedEvent?.startDate)!, end: (self.selectedEvent?.endDate)!, calendars: nil)
+                    let existingEvents = eventStore.events(matching: predicate)
+                    
+                    for singleEvent in existingEvents {
+                        if singleEvent.title == event.title && singleEvent.startDate == event.startDate {
+                            // event exist
+                            let alert = UIAlertController(title: "Event Already Exist", message: "\(event.title) has already been added to your calendar.", preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil))
+                            self.delegate?.present(alert, animated: true, completion: nil)
+                            return
+                        }
+                    }
+                    
                     do {
                         try eventStore.save(event, span: .thisEvent)
                     } catch let error as NSError {
                         print("failed to save event with error : \(error)")
                     }
-                    print("Saved Event")
+                    //print("Saved Event")
                     let alert = UIAlertController(title: "Event Added", message: "\(event.title) is now in your calendar", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "Done", style: UIAlertActionStyle.default, handler: nil))
                     self.delegate?.present(alert, animated: true, completion: nil)
                 }
                 else{
-                    
-                    print("failed to save event with error : \(String(describing: error)) or access not granted")
+                    self.showEventsAcessDeniedAlert()
+                    //print("failed to save event with error : \(String(describing: error)) or access not granted")
                 }
             }
         }
@@ -112,6 +123,25 @@ class ButtonTableViewCell: UITableViewCell {
         calendarAlert.addAction(cancelAction)
        
         delegate?.present(calendarAlert, animated: true, completion: nil)
+    }
+    
+    func showEventsAcessDeniedAlert() {
+        let alertController = UIAlertController(title: "Allow access to calendar",
+                                                message: "The calendar permission was not authorized. Please enable it in Settings to continue.",
+                                                preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alertAction) in
+            
+            if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.open(appSettings as URL, options: [:], completionHandler: nil)
+            }
+        }
+        alertController.addAction(settingsAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        self.delegate?.present(alertController, animated: true, completion: nil)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
