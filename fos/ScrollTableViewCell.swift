@@ -29,7 +29,6 @@ class ScrollTableViewCell: UITableViewCell {
             let iView = UIImageView()
             iView.image = imageArray[i]
             iView.contentMode = .scaleAspectFill
-            
             print(self.scrollView.frame.width)
             let xPosition = self.scrollView.frame.width * CGFloat(i)
             iView.frame = CGRect(x: xPosition, y: 0, width: self.scrollView.frame.width, height: self.scrollView.frame.height)

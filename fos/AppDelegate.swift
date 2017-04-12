@@ -39,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else if defaults.object(forKey: "Twitter") == nil {
             defaults.set(false, forKey: "Twitter")
         }
-
         
         return SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     }

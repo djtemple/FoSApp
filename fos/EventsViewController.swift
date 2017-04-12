@@ -32,7 +32,7 @@ struct Events {
     
 }
 
-class EventsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarControllerDelegate {
+class EventsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     
@@ -41,50 +41,72 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
+    @IBOutlet weak var internetConnectionLabel: UILabel!
     
+    @IBOutlet weak var tryAgainButton: UIButton!
     
     var eventID:[String] = []
     var eventsArray:[Events] = []
     
     var refreshControl = UIRefreshControl()
+    var reachability = Reachability()
     //let searchBar = UISearchBar()
     
     var isVisible:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // set the delegate of the tab bar
-        self.tabBarController?.delegate = self
-
-        self.activityIndicator.startAnimating()
-        self.activityIndicator.isHidden = false
+        //self.activityIndicator.startAnimating()
+        //self.activityIndicator.isHidden = false
         
-        self.imageView.image = UIImage(named: "slide 1")
+        self.imageView.image = UIImage(named: "city_11")
         
         self.refreshControl.addTarget(self, action: #selector(EventsViewController.refresh(sender:)), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
 
-        self.getEventID()
+        //self.getEventID()
         
-        //self.createSearchBar()
-        
+        self.checkInternet()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        // check internet connection
+        
+        // but do you have to reload the data if the data is already there?
+    }
+    
+    func checkInternet() {
+        if reachability?.currentReachabilityStatus == .notReachable {
+            self.activityIndicator.isHidden = true
+            self.internetConnectionLabel.isHidden = false
+            self.tryAgainButton.isHidden = false
+            
+            //self.tableView.tableFooterView = UIView()
+            
+            self.tableView.separatorStyle = .none
+            
+        }
+        else {
+            self.internetConnectionLabel.isHidden = true
+            self.tryAgainButton.isHidden = true
+            
+            self.activityIndicator.startAnimating()
+            self.activityIndicator.isHidden = false
+            
+            self.tableView.separatorStyle = .singleLine
+
+            
+            self.getEventID()
+        }
+    }
+    
+    @IBAction func tryAgainButtonAction(_ sender: Any) {
+        self.checkInternet()
+    }
    
     @IBAction func searchBarItem(_ sender: Any) {
         
        
-    }
-    
-    // scroll tableview to the top when the home tab bar is selected
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        
-        if tabBarController.selectedIndex == 2 {
-            print("------ home is 2")
-            self.scrollToFirstRow()
-        }
-        
-        
     }
     
     func refresh(sender: AnyObject) {
@@ -241,8 +263,12 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func scrollToFirstRow() {
-        let indexPath = NSIndexPath(row: 0, section: 0)
-        self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: true)
+        
+        if !eventsArray.isEmpty {
+            let indexPath = NSIndexPath(row: 0, section: 0)
+            self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: true)
+        }
+        
     }
 
     

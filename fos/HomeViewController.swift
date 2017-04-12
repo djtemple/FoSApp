@@ -27,16 +27,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    // Hold all the loaded Tweets
+    @IBOutlet weak var noInternetLabel: UILabel!
     
+    @IBOutlet weak var tryAgainButton: UIButton!
     var imageArray = [UIImage]()
-
+    
+    // Hold all the loaded Tweets
     var tweets: [TWTRTweet] = []
     var instagram:[instagramPost] = []
     
     var postArray:[Any] = []
     
     var refreshControl = UIRefreshControl()
+    
+    var reachability = Reachability()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,25 +67,68 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.refreshControl.addTarget(self, action: #selector(HomeViewController.refresh(sender:)), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
         
-        self.activityIndicator.startAnimating()
-        self.activityIndicator.isHidden = false
         
-        DispatchQueue.global(qos: .userInitiated).async {
-            
-            self.getInstagramPost()
-            
-            // Bounce back to the main thread to update the UI
-            DispatchQueue.main.async {
-                
-            }
-        }
+        
+        self.checkInternet()
+        
     }
+    override func viewDidAppear(_ animated: Bool) {
+        // check internet connection
+        
+        // but do you have to reload the data if the data is already there?
+    }
+    
+    func checkInternet() {
+        if reachability?.currentReachabilityStatus == .notReachable {
+            print("No internet connection")
+            self.tryAgainButton.isHidden = false
+            self.noInternetLabel.isHidden = false
+            self.activityIndicator.isHidden = true
+            
+        }
+        else {
+            print("Internet connection avaible")
+            self.noInternetLabel.isHidden = true
+            self.tryAgainButton.isHidden = true
+            
+            self.activityIndicator.startAnimating()
+            self.activityIndicator.isHidden = false
+            
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                
+                self.getInstagramPost()
+                
+                // Bounce back to the main thread to update the UI
+                DispatchQueue.main.async {
+                    
+                }
+            }
+            
+        }
+
+    }
+    
+    
     // scroll tableview to the top when the home tab bar is selected
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        
+        print("in home 0")
+
         if tabBarController.selectedIndex == 0 {
-            //print("------ home is 0")
-            self.scrollToFirstRow()
+            print("------ home is 0")
+            if !self.postArray.isEmpty {
+                self.scrollToFirstRow()
+            }
+            
+        }
+        else if tabBarController.selectedIndex == 2 {
+            //EventsViewController.scr
+            print("--- home is 2")
+            
+            if viewController is UINavigationController {
+                print("view is a navigation")
+                               
+            }
         }
         
         
@@ -105,10 +152,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         else if defaults.bool(forKey: "Twitter") {
             self.postArray = self.tweets
-            //self.postArray = self.instagram
         }
-        // this is causing the problem. This method is called more than once.
-        
         if self.activityIndicator.isAnimating {
             self.activityIndicator.stopAnimating()
             self.activityIndicator.isHidden = true
@@ -130,8 +174,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Scroll the tableview back to display the first table cell
     func scrollToFirstRow() {
-        let indexPath = NSIndexPath(row: 0, section: 0)
-        self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: true)
+        
+        if !postArray.isEmpty {
+            let indexPath = NSIndexPath(row: 0, section: 0)
+            self.tableView.scrollToRow(at: indexPath as IndexPath, at: .top, animated: true)
+
+        }
     }
     
     func getInstagramPost() {
@@ -164,6 +212,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             //print(readableJSON ?? "no object")
             
             let datas = readableJSON?["data"] as? [[String:Any]]
+            
+            
+            if self.instagram.count > 0 {
+                self.instagram = []
+            }
             
             for data in datas! {
                 // checks if captions is not empty
@@ -248,7 +301,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     /* Sorts the instagram post and twitter post into one timeline.
      * Organizes the post from dates (newest to oldest)
      */
-    
     func sortArray() {
         let limit = self.instagram.count + self.tweets.count
         
@@ -262,63 +314,82 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         var instagramIndex = 0
         var tweetIndex = 0
         
+        var instagramLast = false
+        var twitterLast = false
+        
         for _ in 0..<limit {
-            // get both of the post
             let instaPost = self.instagram[instagramIndex]
-            let twt = self.tweets[tweetIndex]
+            let tweet = self.tweets[tweetIndex]
             
             // format the date formatter
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-d HH:mm:ssZ"
             
             let instagramDate = dateFormatter.date(from: instaPost.timeStamp)
-            let twtDate = twt.createdAt
+            let twtDate = tweet.createdAt
             
-            // compare the instagram date and the twitter date
-            if instagramDate! < twtDate {
-                // twitter before instagram
-                if(postArray.count + 1 < limit) {
-                    postArray.append(twt)
-                }
-                // increment the twitter index
-                if(tweetIndex + 1 < self.tweets.count) {
-                    tweetIndex += 1
+            if twtDate > instagramDate! {
+                // twitter first 
+                
+                if !twitterLast {
+                    self.postArray.append(tweet)
+                    
+                    if tweetIndex + 1 < self.tweets.count {
+                        tweetIndex += 1
+                    }
+                    
+                    if tweet == self.tweets.last {
+                        twitterLast = true
+                    }
                 }
                 else {
-                    if(tweetIndex == self.tweets.count - 1) {
+                    // last tweet in the post array already
+                    if !instagramLast {
+                        self.postArray.append(instaPost)
                         
-                        //check if the element exist in the array before appending
-                        if(postArray.count <= limit) {
-                            postArray.append(instaPost)
-                        }
-                        
-                        if(instagramIndex + 1 < self.instagram.count) {
+                        if instagramIndex + 1 < self.instagram.count {
                             instagramIndex += 1
                         }
                         
+                        if instaPost.text.lowercased() == self.instagram[instagramIndex].text.lowercased(){
+                            instagramLast = true
+                        }
                     }
                 }
-                
             }
             else {
-                // instagram before twitter post
-                
-                // Add to the array
-                if(postArray.count < limit) {
-                    postArray.append(instaPost)
+                // instagram before twitter
+                if !instagramLast {
+                    self.postArray.append(instaPost)
+                    
+                    if instagramIndex + 1 < self.instagram.count {
+                        instagramIndex += 1
+                    }
+                    if instaPost.text.lowercased() == self.instagram[instagramIndex].text.lowercased() {
+                        instagramLast = true
+                    }
                 }
-                // check if the index will be over the instagram count
-                // checks for index out of bounds
-                if(instagramIndex + 1 < self.instagram.count) {
-                    instagramIndex += 1
+                else {
+                    if !twitterLast {
+                        self.postArray.append(tweet)
+                        
+                        if tweetIndex + 1 < self.tweets.count {
+                            tweetIndex += 1
+                        }
+                        
+                        if tweet == self.tweets.last {
+                            twitterLast = true
+                        }
+
+                    }
                 }
-                
             }
+            
+            
             
         }
         // after processing the postArray. Reload the table view data
         self.tableView.reloadData()
-        
     }
     
     //return the number of cells from the postArray count
@@ -375,6 +446,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     cell.tweetView.delegate = self
                     cell.tweetView.showActionButtons = false
                     cell.configure(with: twt)
+                    cell.selectionStyle = UITableViewCellSelectionStyle.none
                     
                     return cell
                 }
@@ -446,5 +518,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
 
+    @IBAction func tryAgainButtonAction(_ sender: Any) {
+        self.checkInternet()
+    }
     
 }
