@@ -62,12 +62,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.tableView.scrollsToTop = true
         
-        
-        //self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl.addTarget(self, action: #selector(HomeViewController.refresh(sender:)), for: .valueChanged)
         self.tableView.addSubview(refreshControl)
-        
-        
         
         self.checkInternet()
         
@@ -85,6 +81,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.noInternetLabel.isHidden = false
             self.activityIndicator.isHidden = true
             
+            if self.refreshControl.isRefreshing {
+                self.refreshControl.endRefreshing()
+            }
+
+            
         }
         else {
             print("Internet connection avaible")
@@ -94,11 +95,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.activityIndicator.startAnimating()
             self.activityIndicator.isHidden = false
             
-            
             DispatchQueue.global(qos: .userInitiated).async {
-                
                 self.getInstagramPost()
-                
                 // Bounce back to the main thread to update the UI
                 DispatchQueue.main.async {
                     
@@ -164,7 +162,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func refresh(sender: AnyObject) {
         DispatchQueue.global(qos: .userInitiated).async {
-            self.getInstagramPost()
+            //self.getInstagramPost()
+            self.checkInternet()
             // Bounce back to the main thread to update the UI
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -467,16 +466,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     // return the height of the cells using auto layout
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        
         if indexPath.row == 0 {
             return 140
         }
         else {
             return UITableViewAutomaticDimension
         }
- 
-        //return UITableViewAutomaticDimension
-        
         
     }
     

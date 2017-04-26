@@ -79,10 +79,8 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
         if reachability?.currentReachabilityStatus == .notReachable {
             self.activityIndicator.isHidden = true
             self.internetConnectionLabel.isHidden = false
+            self.internetConnectionLabel.text = "No internet connection"
             self.tryAgainButton.isHidden = false
-            
-            //self.tableView.tableFooterView = UIView()
-            
             self.tableView.separatorStyle = .none
             
         }
@@ -107,6 +105,21 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
     @IBAction func searchBarItem(_ sender: Any) {
         
        
+    }
+    
+    func displayEventMessage() {
+        self.internetConnectionLabel.text = "No events"
+        self.internetConnectionLabel.isHidden = false
+        self.activityIndicator.isHidden = true
+        self.activityIndicator.stopAnimating()
+        
+        self.tableView.tableFooterView = UIView()
+        
+        if self.refreshControl.isRefreshing {
+            self.refreshControl.endRefreshing()
+        }
+
+        
     }
     
     func refresh(sender: AnyObject) {
@@ -134,6 +147,14 @@ class EventsViewController: UIViewController, UITableViewDataSource, UITableView
         do {
             let readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .allowFragments) as? NSDictionary
             let datas = readableJSON?["events"] as? [[String:Any]]
+            
+            if (datas?.isEmpty)! {
+                
+                // display message
+                print("Events ID is Empty")
+                
+                self.displayEventMessage()
+            }
             
             for data in datas! {
                 //print(data)
